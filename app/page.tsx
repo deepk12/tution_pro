@@ -25,7 +25,7 @@ const SLIDE_IMAGES = [
 
 // --- Sub-Component: Countdown Timer ---
 const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 59 });
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -64,13 +64,12 @@ const FadeInWhenVisible = ({ children, delay = 0 }) => (
 // --- Section Components ---
 
 const Hero = ({ navigateTo, isDarkMode }) => {
-  // FIXED SLIDER LOGIC
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev === SLIDE_IMAGES.length - 1 ? 0 : prev + 1));
-    }, 4000); // Changes every 4 seconds
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
@@ -88,30 +87,27 @@ const Hero = ({ navigateTo, isDarkMode }) => {
             TutionPro provides industry-vetted curriculums and 1-on-1 mentorship to help you break into top-tier tech roles.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button onClick={() => navigateTo("plans")} className="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-2xl shadow-indigo-600/40 transition-all flex items-center gap-3 active:scale-95">Start Learning <ArrowRight size={20} /></button>
+            <button onClick={() => navigateTo("plans")} className="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-2xl shadow-indigo-600/40 transition-all flex items-center gap-3">Start Learning <ArrowRight size={20} /></button>
             <button onClick={() => navigateTo("about")} className={`px-10 py-5 rounded-2xl font-bold border transition-all ${isDarkMode ? 'border-white/10 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50'}`}>Explore More</button>
           </div>
         </div>
 
-        {/* FIXED SLIDER VIEWPORT */}
         <div className="relative flex justify-center">
           <div className="relative w-full max-w-[450px] aspect-[4/5]">
             <div className={`absolute -inset-4 blur-[100px] rounded-full opacity-30 ${isDarkMode ? 'bg-indigo-500' : 'bg-indigo-300'}`} />
             <div className={`relative z-10 w-full h-full rounded-[50px] overflow-hidden border-8 transition-colors duration-500 ${isDarkMode ? 'border-slate-900 shadow-black/50' : 'border-white shadow-indigo-500/10'}`}>
               <AnimatePresence mode="wait">
                 <motion.img 
-                  key={current} // Key changes trigger the animation
+                  key={current} 
                   src={SLIDE_IMAGES[current]} 
                   initial={{ opacity: 0, scale: 1.1 }} 
                   animate={{ opacity: 1, scale: 1 }} 
                   exit={{ opacity: 0, scale: 0.95 }} 
-                  transition={{ duration: 0.8, ease: "easeInOut" }} 
+                  transition={{ duration: 0.8 }} 
                   className="w-full h-full object-cover" 
                 />
               </AnimatePresence>
             </div>
-            
-            {/* Slider Dots */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
               {SLIDE_IMAGES.map((_, i) => (
                 <div key={i} className={`h-2 rounded-full transition-all duration-300 ${current === i ? "w-8 bg-indigo-600" : "w-2 bg-white/50"}`} />
@@ -124,15 +120,13 @@ const Hero = ({ navigateTo, isDarkMode }) => {
   );
 };
 
-// ... (About, Services, Plans, Contact remain the same as previous) ...
-
 const About = ({ isDarkMode }) => (
   <section id="about" className="py-32 border-t border-white/5">
     <div className="grid lg:grid-cols-2 gap-20 items-center">
       <FadeInWhenVisible>
         <div className="space-y-8">
           <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Built by <span className="text-indigo-600">Engineers.</span></h2>
-          <p className="text-xl opacity-70 leading-relaxed">We founded TutionPro after realizing that university degrees weren't keeping up with the speed of AI development.</p>
+          <p className="text-xl opacity-70 leading-relaxed">We founded TutionPro after realizing university degrees weren't keeping up with the speed of AI development.</p>
           <div className="grid grid-cols-2 gap-6">
             {[ { l: "15k+", s: "Active Students" }, { l: "98%", s: "Job Success" } ].map((stat, i) => (
               <div key={i} className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
@@ -197,26 +191,102 @@ const Plans = ({ isDarkMode }) => (
   </section>
 );
 
-const Contact = ({ isDarkMode }) => (
-  <section id="contact" className="py-32 mb-20">
-    <FadeInWhenVisible>
-      <div className={`p-16 rounded-[60px] border grid lg:grid-cols-2 gap-16 items-center ${isDarkMode ? 'bg-indigo-600/10 border-indigo-600/20' : 'bg-slate-900 text-white border-transparent'}`}>
-        <div className="space-y-8">
-          <h2 className="text-6xl font-black tracking-tighter">Ready to <br/> <span className="text-indigo-500">Transform?</span></h2>
-          <div className="space-y-4">
-             <div className="flex items-center gap-4 text-lg font-medium"><Mail className="text-indigo-500"/> hello@tutionpro.com</div>
+const Contact = ({ isDarkMode }) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowConfetti(true);
+    // Let confetti run for a moment before switching view
+    setTimeout(() => {
+      setIsSubmitted(true);
+      setShowConfetti(false);
+    }, 1500);
+  };
+
+  return (
+    <section id="contact" className="py-32 mb-20">
+      <FadeInWhenVisible>
+        <div className={`p-16 rounded-[60px] border grid lg:grid-cols-2 gap-16 items-center overflow-hidden relative ${isDarkMode ? 'bg-indigo-600/10 border-indigo-600/20' : 'bg-slate-900 text-white border-transparent'}`}>
+          
+          {/* Confetti Particles Effect */}
+          {showConfetti && (
+            <div className="absolute inset-0 pointer-events-none z-50">
+              {[...Array(40)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ 
+                    top: "60%", 
+                    left: "75%", 
+                    scale: 0,
+                    rotate: 0 
+                  }}
+                  animate={{ 
+                    top: [`${Math.random() * 100}%`], 
+                    left: [`${Math.random() * 100}%`], 
+                    scale: [0, 1, 0],
+                    rotate: 360 
+                  }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="absolute w-2 h-2 rounded-sm"
+                  style={{ backgroundColor: ["#4F46E5", "#FACC15", "#10B981", "#EC4899"][i % 4] }}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="space-y-8">
+            <h2 className="text-6xl font-black tracking-tighter">Ready to <br/> <span className="text-indigo-500">Transform?</span></h2>
+            <div className="space-y-4">
+               <div className="flex items-center gap-4 text-lg font-medium"><Mail className="text-indigo-500"/> hello@tutionpro.com</div>
+            </div>
+          </div>
+
+          <div className="relative min-h-[350px] flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+              {!isSubmitted ? (
+                <motion.form 
+                  key="form"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  onSubmit={handleSubmit}
+                  className="space-y-4"
+                >
+                  <input required placeholder="Full Name" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
+                  <input required type="email" placeholder="Email" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
+                  <textarea required placeholder="Message" rows={4} className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
+                  <button type="submit" className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-700 active:scale-[0.98] transition-all relative overflow-hidden">
+                    Send Application
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div 
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center space-y-6"
+                >
+                  <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40">
+                    <Check size={48} className="text-white" strokeWidth={4} />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-3xl font-black">Application Sent!</h3>
+                    <p className="opacity-70 text-lg">Check your email for the next steps. <br/> Welcome to the future.</p>
+                  </div>
+                  <button onClick={() => setIsSubmitted(false)} className="text-indigo-400 font-bold hover:underline">
+                    Send another message
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
-        <div className="space-y-4">
-          <input placeholder="Full Name" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none" />
-          <input placeholder="Email" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none" />
-          <textarea placeholder="Message" rows={4} className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none" />
-          <button className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg">Send Application</button>
-        </div>
-      </div>
-    </FadeInWhenVisible>
-  </section>
-);
+      </FadeInWhenVisible>
+    </section>
+  );
+};
 
 // --- Main App ---
 
@@ -266,21 +336,20 @@ export default function App() {
   return (
     <div className={`transition-colors duration-500 selection:bg-indigo-600 selection:text-white ${isDarkMode ? "bg-slate-950 text-white" : "bg-white text-slate-900"}`}>
       
-      {/* 1. TOP ADVERTISEMENT BANNER WITH COUNTDOWN */}
-      <div className="fixed top-0 left-0 w-full z-[120] bg-indigo-600 text-white py-2.5 border-b border-indigo-400/30 overflow-hidden shadow-lg">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
+      {/* 1. TOP ADVERTISEMENT BANNER WITH CLAIM BUTTON */}
+      <div className="fixed top-0 left-0 w-full z-[120] bg-indigo-600 text-white py-2 border-b border-indigo-400/30 overflow-hidden shadow-xl">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative h-10">
           <motion.div 
             animate={{ x: ["0%", "-50%"] }} 
-            transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-            className="whitespace-nowrap flex gap-10 items-center text-[10px] md:text-xs font-black uppercase tracking-[0.15em]"
+            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+            className="whitespace-nowrap flex gap-10 items-center text-[10px] md:text-xs font-black uppercase tracking-[0.1em]"
           >
             {[1, 2].map((i) => (
               <div key={i} className="flex gap-10 items-center">
                 <span>🔥 NAT Admission is LOCKED at ₹0! 🔥</span>
+                <button onClick={() => navigateTo('contact')} className="bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[9px] font-black hover:scale-105 transition-transform shadow-lg">CLAIM NOW</button>
                 <span className="opacity-30">|</span>
-                <span className="text-yellow-300">⚡ HURRY! OFFER ENDS SOON ⚡</span>
-                <span className="opacity-30">|</span>
-                <span>🚀 Limited Slots Available for 2026 🚀</span>
+                <span className="text-yellow-300">⚡ OFFER EXPIRES SOON ⚡</span>
                 <span className="opacity-30">|</span>
               </div>
             ))}
@@ -293,7 +362,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Scroll Progress Bar */}
       <motion.div className="fixed top-[48px] left-0 right-0 h-1 bg-indigo-400 z-[110] origin-left" style={{ scaleX }} />
 
       {/* Navbar */}
@@ -308,7 +376,7 @@ export default function App() {
             {NAV_LINKS.map(link => (
               <button key={link.id} onClick={() => navigateTo(link.id)} 
                 className={`px-5 py-2 font-bold text-sm rounded-xl transition-all 
-                ${activePage === link.id ? "text-white bg-indigo-600 shadow-md scale-105" : "opacity-50 hover:opacity-100 hover:scale-105"}`}>
+                ${activePage === link.id ? "text-white bg-indigo-600 shadow-md" : "opacity-50 hover:opacity-100"}`}>
                 {link.name}
               </button>
             ))}
@@ -323,10 +391,10 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Floating Action Buttons */}
+      {/* Floating Buttons */}
       <div className="fixed bottom-6 right-6 z-[120] flex flex-col gap-4">
-        <motion.a whileHover={{ scale: 1.1, rotate: 5 }} whileTap={{ scale: 0.9 }} href="https://wa.me/911234567890" target="_blank" className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40"><MessageCircle size={32} fill="currentColor" /></motion.a>
-        <motion.a whileHover={{ scale: 1.1, rotate: -5 }} whileTap={{ scale: 0.9 }} href="tel:+911234567890" className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-2xl shadow-indigo-600/40"><Phone size={28} fill="currentColor" /></motion.a>
+        <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} href="https://wa.me/911234567890" target="_blank" className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl"><MessageCircle size={32} fill="currentColor" /></motion.a>
+        <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} href="tel:+911234567890" className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-2xl"><Phone size={28} fill="currentColor" /></motion.a>
       </div>
 
       <main className="max-w-7xl mx-auto px-6">
