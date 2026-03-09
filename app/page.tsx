@@ -5,7 +5,8 @@ import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { 
   Home, Info, Briefcase, CreditCard, Mail, ArrowRight, Zap, Users, 
   Check, Sun, Moon, Menu, X, Facebook, Twitter, Instagram, Linkedin,
-  Globe, Shield, Cpu, GraduationCap, Award, MessageSquare, Phone, MessageCircle, Clock
+  Globe, Shield, Cpu, GraduationCap, Award, MessageSquare, Phone, 
+  MessageCircle,BookOpen,Target,Video, FileText, Clock, Trophy
 } from "lucide-react";
 
 // --- Configuration & Data ---
@@ -76,26 +77,16 @@ const Hero = ({ navigateTo, isDarkMode }) => {
   return (
     <section id="home" className="min-h-screen flex flex-col justify-center pt-44 md:pt-32">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-sm font-bold ${isDarkMode ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400' : 'bg-indigo-50 border-indigo-200 text-indigo-600'}`}>
-            <Zap size={16} className="fill-current" /> Leading Tech Education 2026
-          </motion.div>
-          <h1 className={`text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-            Master the <br/> <span className="text-indigo-600">Future.</span>
-          </h1>
-          <p className={`text-xl max-w-lg leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
-            TutionPro provides industry-vetted curriculums and 1-on-1 mentorship to help you break into top-tier tech roles.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <button onClick={() => navigateTo("plans")} className="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-2xl shadow-indigo-600/40 transition-all flex items-center gap-3">Start Learning <ArrowRight size={20} /></button>
-            <button onClick={() => navigateTo("about")} className={`px-10 py-5 rounded-2xl font-bold border transition-all ${isDarkMode ? 'border-white/10 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50'}`}>Explore More</button>
-          </div>
-        </div>
-
-        <div className="relative flex justify-center">
+        
+        {/* LEFT COLUMN: IMAGE SLIDER */}
+        <div className="relative flex justify-center order-2 lg:order-1">
           <div className="relative w-full max-w-[450px] aspect-[4/5]">
+            {/* Background Glow */}
             <div className={`absolute -inset-4 blur-[100px] rounded-full opacity-30 ${isDarkMode ? 'bg-indigo-500' : 'bg-indigo-300'}`} />
-            <div className={`relative z-10 w-full h-full rounded-[50px] overflow-hidden border-8 transition-colors duration-500 ${isDarkMode ? 'border-slate-900 shadow-black/50' : 'border-white shadow-indigo-500/10'}`}>
+            
+            {/* Image Container */}
+            <div className={`relative z-10 w-full h-full rounded-[50px] overflow-hidden border-8 transition-colors duration-500
+              ${isDarkMode ? 'border-slate-900 shadow-black/50' : 'border-white shadow-indigo-500/10'}`}>
               <AnimatePresence mode="wait">
                 <motion.img 
                   key={current} 
@@ -108,6 +99,24 @@ const Hero = ({ navigateTo, isDarkMode }) => {
                 />
               </AnimatePresence>
             </div>
+
+            {/* Floating Achievement Badge */}
+            <motion.div 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4 }}
+              className={`absolute -bottom-6 -right-6 z-20 p-4 rounded-2xl border shadow-xl hidden md:block
+                ${isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-100'}`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-500/20 rounded-lg text-green-500"><Check size={20} /></div>
+                <div>
+                  <div className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>CBSE / ICSE / State</div>
+                  <div className="text-[10px] font-bold text-indigo-500 uppercase">100% Syllabus Covered</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Slider Dots */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
               {SLIDE_IMAGES.map((_, i) => (
                 <div key={i} className={`h-2 rounded-full transition-all duration-300 ${current === i ? "w-8 bg-indigo-600" : "w-2 bg-white/50"}`} />
@@ -115,49 +124,215 @@ const Hero = ({ navigateTo, isDarkMode }) => {
             </div>
           </div>
         </div>
+
+        {/* RIGHT COLUMN: TEXT CONTENT */}
+        <div className="space-y-8 order-1 lg:order-2">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-sm font-bold ${isDarkMode ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400' : 'bg-indigo-50 border-indigo-200 text-indigo-600'}`}
+          >
+            <Zap size={16} className="fill-current" /> India's Top Rated Classes 1-12
+          </motion.div>
+          
+          <h1 className={`text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            Excellence in <br/> <span className="text-indigo-600">Every Grade.</span>
+          </h1>
+          
+          <p className={`text-xl max-w-lg leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+            From Class 1 foundations to Class 12 Boards & Entrance (JEE/NEET), TutionPro provides the mentorship your child needs to lead the rank list.
+          </p>
+          
+          <div className="flex flex-wrap gap-4">
+            <button 
+              onClick={() => navigateTo("plans")} 
+              className="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-2xl shadow-indigo-600/40 transition-all flex items-center gap-3 active:scale-95"
+            >
+              Join Free Demo <ArrowRight size={20} />
+            </button>
+            <button 
+              onClick={() => navigateTo("unboxing")} 
+              className={`px-10 py-5 rounded-2xl font-bold border transition-all ${isDarkMode ? 'border-white/10 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50'}`}
+            >
+              Win Scholarship
+            </button>
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
 
-const About = ({ isDarkMode }) => (
-  <section id="about" className="py-32 border-t border-white/5">
-    <div className="grid lg:grid-cols-2 gap-20 items-center">
+const About = ({ isDarkMode }: { isDarkMode: boolean }) => (
+  <section id="about" className="py-32 scroll-mt-24 border-t border-white/5 overflow-hidden">
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
+      
+      {/* LEFT COLUMN: EDITORIAL CONTENT */}
       <FadeInWhenVisible>
-        <div className="space-y-8">
-          <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Built by <span className="text-indigo-600">Engineers.</span></h2>
-          <p className="text-xl opacity-70 leading-relaxed">We founded TutionPro after realizing university degrees weren't keeping up with the speed of AI development.</p>
-          <div className="grid grid-cols-2 gap-6">
-            {[ { l: "15k+", s: "Active Students" }, { l: "98%", s: "Job Success" } ].map((stat, i) => (
-              <div key={i} className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
-                <div className="text-3xl font-black text-indigo-600">{stat.l}</div>
-                <div className="text-sm font-bold opacity-60 uppercase tracking-widest">{stat.s}</div>
-              </div>
-            ))}
+        <div className="space-y-10">
+          <div className="space-y-4">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="px-4 py-1.5 rounded-full bg-indigo-600 text-white text-[10px] font-black uppercase tracking-[0.2em]"
+            >
+              The TutionPro Standard
+            </motion.span>
+            <h2 className={`text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              Beyond <br /> <span className="text-indigo-600">Learning.</span>
+            </h2>
+          </div>
+          
+          <p className={`text-xl leading-relaxed max-w-lg ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+            We don't just teach Class 1-12; we engineer success. Our ecosystem combines **AIR Top-100 mentors** with adaptive AI to create a personalized journey for PCM, PCB, and Commerce.
+          </p>
+
+          <div className="flex flex-col gap-8">
+             <div className="flex items-start gap-6">
+                <div className={`h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center ${isDarkMode ? 'bg-white/5' : 'bg-indigo-50'}`}>
+                   <Trophy className="text-indigo-600" size={32} />
+                </div>
+                <div>
+                   <h4 className="text-xl font-bold">AIR Ranker Faculty</h4>
+                   <p className="text-sm opacity-60">Learn directly from those who conquered JEE & NEET.</p>
+                </div>
+             </div>
+             
+             <div className="flex items-start gap-6">
+                <div className={`h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center ${isDarkMode ? 'bg-white/5' : 'bg-indigo-50'}`}>
+                   <Target className="text-indigo-600" size={32} />
+                </div>
+                <div>
+                   <h4 className="text-xl font-bold">Precision Mapping</h4>
+                   <p className="text-sm opacity-60">Syllabus coverage designed for 100/100 board scores.</p>
+                </div>
+             </div>
           </div>
         </div>
       </FadeInWhenVisible>
-      <img src={SLIDE_IMAGES[0]} className="rounded-[40px] shadow-2xl" alt="Office" />
+
+      {/* RIGHT COLUMN: FOUR-QUADRANT MOSAIC (4 IMAGES) */}
+      <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[650px]">
+        {/* Top Left: Group Study */}
+        <motion.div 
+          whileHover={{ scale: 0.98 }}
+          className="rounded-[40px] overflow-hidden shadow-2xl relative group"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+            alt="Collaborative Learning"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent" />
+        </motion.div>
+
+        {/* Top Right: One-on-one help */}
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="rounded-[40px] overflow-hidden shadow-xl border-4 border-transparent hover:border-indigo-500 transition-all bg-indigo-600 flex items-center justify-center"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800" 
+            className="w-full h-full object-cover opacity-60" 
+            alt="One-on-one help"
+          />
+          <div className="absolute flex flex-col items-center text-white p-4">
+             <Users size={32} className="mb-2" />
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Personalized <br/> Mentorship</span>
+          </div>
+        </motion.div>
+        
+        {/* Bottom Left: Concept Visualization */}
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="rounded-[40px] overflow-hidden shadow-xl border-4 border-transparent hover:border-indigo-500 transition-all bg-indigo-600 flex items-center justify-center"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800" 
+            className="w-full h-full object-cover opacity-60" 
+            alt="Concept Visualization"
+          />
+          <div className="absolute flex flex-col items-center text-white p-4">
+             <Cpu size={32} className="mb-2" />
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Interactive <br/> 3D Animations</span>
+          </div>
+        </motion.div>
+
+        {/* Bottom Right: Test Preparation */}
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="rounded-[40px] overflow-hidden shadow-xl border-4 border-transparent hover:border-indigo-500 transition-all bg-indigo-600 flex items-center justify-center"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?w=800" 
+            className="w-full h-full object-cover opacity-60" 
+            alt="Test Preparation"
+          />
+          <div className="absolute flex flex-col items-center text-white p-4">
+             <Target size={32} className="mb-2" />
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Competitive <br/> Exam Focus</span>
+          </div>
+        </motion.div>
+      </div>
+
     </div>
   </section>
 );
 
 const Services = ({ isDarkMode }) => (
-  <section id="services" className="py-32">
+  <section id="services" className="py-32 scroll-mt-24">
     <FadeInWhenVisible>
-      <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-        <h2 className="text-5xl font-black tracking-tighter">Everything you need to <span className="text-indigo-600">Scale.</span></h2>
+      <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+          The Ultimate <span className="text-indigo-600">Learning Toolkit.</span>
+        </h2>
+        <p className="opacity-60 text-lg font-medium">Tools designed to help you top your school exams and crack national entrance tests.</p>
       </div>
+
       <div className="grid md:grid-cols-3 gap-8">
         {[
-          { i: Globe, t: "Global Network", d: "Connect with developers across 40+ countries." },
-          { i: Shield, t: "Certified Skills", d: "Get ISO-verified certificates." },
-          { i: MessageSquare, t: "1:1 Coaching", d: "Weekly calls with senior engineers." }
+          { 
+            i: BookOpen, 
+            t: "NCERT & Board Solutions", 
+            d: "Step-by-step solutions for all NCERT textbooks and State Board previous year papers." 
+          },
+          { 
+            i: MessageSquare, 
+            t: "Instant Doubt Solving", 
+            d: "Stuck on a Math problem? Snap a photo and get video solutions from experts in 60 seconds." 
+          },
+          { 
+            i: Target, 
+            t: "JEE / NEET / CUET Prep", 
+            d: "Specialized mock tests, rank predictors, and bridge courses for Class 11 & 12 aspirants." 
+          },
+          { 
+            i: Video, 
+            t: "Concept 3D Animations", 
+            d: "Visualize complex Biology and Physics concepts through high-quality 3D animated lessons." 
+          },
+          { 
+            i: Award, 
+            t: "Olympiad Training", 
+            d: "Dedicated modules for IMO, NSO, and NTSE to build a strong foundation from Class 6." 
+          },
+          { 
+            i: FileText, 
+            t: "Personalized Notes", 
+            d: "Handwritten revision notes and mind maps for quick last-minute exam preparation." 
+          }
         ].map((item, idx) => (
-          <div key={idx} className={`p-10 rounded-[40px] border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200 shadow-xl'}`}>
-            <item.i className="text-indigo-600 mb-6" size={40} />
-            <h3 className="text-2xl font-bold mb-4">{item.t}</h3>
-            <p className="opacity-60 leading-relaxed">{item.d}</p>
+          <div 
+            key={idx} 
+            className={`p-10 rounded-[40px] border transition-all duration-300 hover:-translate-y-2 group
+              ${isDarkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl'}`}
+          >
+            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-colors ${isDarkMode ? 'bg-indigo-500/10' : 'bg-indigo-50 group-hover:bg-indigo-600'}`}>
+              <item.i className={`transition-colors ${isDarkMode ? 'text-indigo-500' : 'text-indigo-600 group-hover:text-white'}`} size={32} />
+            </div>
+            <h3 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{item.t}</h3>
+            <p className={`leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>{item.d}</p>
           </div>
         ))}
       </div>
@@ -166,24 +341,70 @@ const Services = ({ isDarkMode }) => (
 );
 
 const Plans = ({ isDarkMode }) => (
-  <section id="plans" className="py-32">
+  <section id="plans" className="py-32 scroll-mt-24">
     <FadeInWhenVisible>
-      <div className="text-center mb-16">
-        <h2 className="text-5xl font-black tracking-tighter mb-4">Invest in <span className="text-indigo-600">Yourself.</span></h2>
+      <div className="text-center mb-16 space-y-4">
+        <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+          Choose Your <span className="text-indigo-600">Academic Tier.</span>
+        </h2>
+        <p className="opacity-60 font-medium">Affordable excellence for every Indian student.</p>
       </div>
-      <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+      <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {[
-          { n: "Starter", p: "$29", f: ["Fundamental Tracks", "Community Access"] },
-          { n: "Pro", p: "$79", f: ["Unlimited Access", "Priority Mentorship"], h: true },
-          { n: "Enterprise", p: "$199", f: ["Custom Roadmap", "Team Analytics"] }
+          { 
+            n: "Foundations (Class 1-5)", 
+            p: "₹499", 
+            f: ["All Primary Subjects", "Interactive Animation Lessons", "Mental Math & Grammar", "Parent Progress Portal"],
+            color: "from-blue-500/20 to-transparent"
+          },
+          { 
+            n: "Achievers (Class 6-10)", 
+            p: "₹999", 
+            f: ["Maths, Science, SST, English", "Olympiad Preparation", "Foundation for NTSE", "Weekly Live Doubt Sessions"],
+            h: true, // Recommended Plan
+            color: "from-indigo-600/20 to-transparent"
+          },
+          { 
+            n: "Masters (Class 11-12)", 
+            p: "₹1499", 
+            f: ["Streams: PCM, PCB, Commerce, Arts", "JEE/NEET/CUET Special Modules", "Personalized Career Mentorship", "Previous Year Paper Analysis"],
+            color: "from-purple-500/20 to-transparent"
+          }
         ].map((plan, i) => (
-          <div key={i} className={`p-10 rounded-[40px] border relative ${plan.h ? 'border-indigo-600 bg-indigo-600/5 ring-2 ring-indigo-600' : isDarkMode ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white shadow-lg'}`}>
-            <h3 className="text-2xl font-bold mb-4">{plan.n}</h3>
-            <div className="text-6xl font-black mb-8">{plan.p}<span className="text-lg font-normal opacity-40">/mo</span></div>
-            <ul className="space-y-4 mb-12">
-              {plan.f.map(f => <li key={f} className="flex gap-3 items-center font-medium"><Check size={20} className="text-indigo-600 shrink-0"/> {f}</li>)}
+          <div 
+            key={i} 
+            className={`p-10 rounded-[40px] border relative flex flex-col transition-all hover:scale-[1.02] duration-300
+              ${plan.h ? 'border-indigo-600 bg-indigo-600/5 ring-2 ring-indigo-600 shadow-2xl shadow-indigo-600/20' : isDarkMode ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white shadow-lg'}`}
+          >
+            {plan.h && (
+              <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg">
+                Most Popular
+              </span>
+            )}
+            
+            <h3 className={`text-2xl font-black mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{plan.n}</h3>
+            <div className={`text-6xl font-black mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              {plan.p}
+              <span className="text-lg font-normal opacity-40 italic">/month</span>
+            </div>
+            <p className="text-xs font-bold text-indigo-500 mb-8 uppercase tracking-widest">Enroll for NAT 0 RS Scholarship</p>
+            
+            <ul className="space-y-4 mb-12 flex-grow">
+              {plan.f.map(f => (
+                <li key={f} className="flex gap-3 items-start font-medium text-sm leading-tight">
+                  <Check size={18} className="text-indigo-600 shrink-0 mt-0.5"/> 
+                  <span className={isDarkMode ? 'text-gray-400' : 'text-slate-600'}>{f}</span>
+                </li>
+              ))}
             </ul>
-            <button className={`w-full py-5 rounded-2xl font-bold ${plan.h ? 'bg-indigo-600 text-white' : 'bg-indigo-600/10 text-indigo-600'}`}>Get Started</button>
+
+            <button 
+              className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all
+                ${plan.h ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/30' : 'bg-indigo-600/10 text-indigo-600 hover:bg-indigo-600 hover:text-white'}`}
+            >
+              Enroll Now
+            </button>
           </div>
         ))}
       </div>
