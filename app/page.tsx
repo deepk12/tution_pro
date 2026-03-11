@@ -19,9 +19,11 @@ const NAV_LINKS = [
 ];
 
 const SLIDE_IMAGES = [
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
-  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80",
-  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80"
+  "https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1568047571827-8c46fe611345?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3R1ZHklMjBtb3RpdmF0aW9ufGVufDB8fDB8fHww",
+  "https://plus.unsplash.com/premium_photo-1683887034473-74e486cdb7a1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHVuaXZlcnNpdHl8ZW58MHx8MHx8fDA%3D",
+  "https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29mdHdhcmUlMjBlbmdpbmVlcnxlbnwwfHwwfHx8MA%3D%3D",
+  "https://images.unsplash.com/photo-1604964432806-254d07c11f32?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGV2ZWxvcGVyfGVufDB8fDB8fHww"
 ];
 
 // --- Sub-Component: Preloader Animation ---
@@ -249,19 +251,23 @@ const About = ({ isDarkMode }) => (
       </FadeInWhenVisible>
 
       <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[650px]">
-        <motion.div whileHover={{ scale: 0.98 }} className="rounded-[40px] overflow-hidden shadow-2xl relative group">
-          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Collaborative Learning" />
-          <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent" />
+        
+        <motion.div whileHover={{ scale: 1.02 }} className="rounded-[40px] overflow-hidden shadow-xl bg-indigo-600 flex items-center justify-center relative">
+          <img src="https://plus.unsplash.com/premium_photo-1685086785013-acc71c40e5fe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fHw%3D" className="w-full h-full object-cover opacity-60" alt="Mentorship" />
+          <div className="absolute flex flex-col items-center text-white p-4">
+             <BookOpen size={32} className="mb-2" />
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Qaulity Eduaction</span>
+          </div>
         </motion.div>
         <motion.div whileHover={{ scale: 1.02 }} className="rounded-[40px] overflow-hidden shadow-xl bg-indigo-600 flex items-center justify-center relative">
-          <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800" className="w-full h-full object-cover opacity-60" alt="Mentorship" />
+          <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHN0dWRlbnR8ZW58MHx8MHx8fDA%3D" className="w-full h-full object-cover opacity-60" alt="Mentorship" />
           <div className="absolute flex flex-col items-center text-white p-4">
              <Users size={32} className="mb-2" />
              <span className="text-[10px] font-black uppercase tracking-widest text-center">Personalized Mentorship</span>
           </div>
         </motion.div>
         <motion.div whileHover={{ scale: 1.02 }} className="rounded-[40px] overflow-hidden shadow-xl bg-indigo-600 flex items-center justify-center relative">
-          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800" className="w-full h-full object-cover opacity-60" alt="Visualization" />
+          <img src="https://images.unsplash.com/photo-1710743719228-123b2ef2796c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW50ZXJhY3RpdmUlMjBhbmltYXRpb258ZW58MHx8MHx8fDA%3D" className="w-full h-full object-cover opacity-60" alt="Visualization" />
           <div className="absolute flex flex-col items-center text-white p-4">
              <Cpu size={32} className="mb-2" />
              <span className="text-[10px] font-black uppercase tracking-widest text-center">Interactive Animations</span>
@@ -445,7 +451,7 @@ export default function App() {
           <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }} className="whitespace-nowrap flex gap-10 items-center text-[10px] md:text-xs font-black uppercase tracking-[0.1em]">
             {[1, 2].map((i) => (
               <div key={i} className="flex gap-10 items-center">
-                <span>🔥 NAT Admission is LOCKED at ₹0! 🔥</span>
+                <span>🔥 Admission is LOCKED at ₹999! 🔥</span>
                 <button onClick={() => navigateTo('contact')} className="bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[9px] font-black hover:scale-105 transition-transform shadow-lg">CLAIM NOW</button>
                 <span className="opacity-30">|</span>
                 <span className="text-yellow-300">⚡ OFFER EXPIRES SOON ⚡</span>
