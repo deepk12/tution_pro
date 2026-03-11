@@ -6,7 +6,7 @@ import {
   Home, Info, Briefcase, CreditCard, Mail, ArrowRight, Zap, Users, 
   Check, Sun, Moon, Menu, X, Facebook, Twitter, Instagram, Linkedin,
   Globe, Shield, Cpu, GraduationCap, Award, MessageSquare, Phone, 
-  MessageCircle,BookOpen,Target,Video, FileText, Clock, Trophy
+  MessageCircle, BookOpen, Target, Video, FileText, Clock, Trophy
 } from "lucide-react";
 
 // --- Configuration & Data ---
@@ -23,6 +23,52 @@ const SLIDE_IMAGES = [
   "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80",
   "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80"
 ];
+
+// --- Sub-Component: Preloader Animation ---
+const Preloader = ({ isDarkMode }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className={`fixed inset-0 z-[2000] flex flex-col items-center justify-center ${
+        isDarkMode ? "bg-slate-950" : "bg-white"
+      }`}
+    >
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center gap-4 mb-8"
+      >
+        <div className="h-20 w-20 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-4xl italic font-black shadow-2xl">
+          T
+        </div>
+        <span className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+          Tution<span className="text-indigo-600">Pro</span>
+        </span>
+      </motion.div>
+
+      <div className="w-64 h-1.5 bg-indigo-500/10 rounded-full overflow-hidden relative">
+        <motion.div
+          initial={{ x: "-100%" }}
+          animate={{ x: "0%" }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
+          className="absolute inset-0 bg-indigo-600"
+        />
+      </div>
+      
+      <motion.p 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0.5] }}
+        transition={{ delay: 0.5, duration: 1 }}
+        className="mt-6 text-xs font-black uppercase tracking-[0.4em] text-indigo-500"
+      >
+        Empowering Your Future
+      </motion.p>
+    </motion.div>
+  );
+};
 
 // --- Sub-Component: Countdown Timer ---
 const CountdownTimer = () => {
@@ -81,10 +127,8 @@ const Hero = ({ navigateTo, isDarkMode }) => {
         {/* LEFT COLUMN: IMAGE SLIDER */}
         <div className="relative flex justify-center order-2 lg:order-1">
           <div className="relative w-full max-w-[450px] aspect-[4/5]">
-            {/* Background Glow */}
             <div className={`absolute -inset-4 blur-[100px] rounded-full opacity-30 ${isDarkMode ? 'bg-indigo-500' : 'bg-indigo-300'}`} />
             
-            {/* Image Container */}
             <div className={`relative z-10 w-full h-full rounded-[50px] overflow-hidden border-8 transition-colors duration-500
               ${isDarkMode ? 'border-slate-900 shadow-black/50' : 'border-white shadow-indigo-500/10'}`}>
               <AnimatePresence mode="wait">
@@ -100,7 +144,6 @@ const Hero = ({ navigateTo, isDarkMode }) => {
               </AnimatePresence>
             </div>
 
-            {/* Floating Achievement Badge */}
             <motion.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4 }}
@@ -116,7 +159,6 @@ const Hero = ({ navigateTo, isDarkMode }) => {
               </div>
             </motion.div>
 
-            {/* Slider Dots */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
               {SLIDE_IMAGES.map((_, i) => (
                 <div key={i} className={`h-2 rounded-full transition-all duration-300 ${current === i ? "w-8 bg-indigo-600" : "w-2 bg-white/50"}`} />
@@ -158,17 +200,14 @@ const Hero = ({ navigateTo, isDarkMode }) => {
             </button>
           </div>
         </div>
-
       </div>
     </section>
   );
 };
 
-const About = ({ isDarkMode }: { isDarkMode: boolean }) => (
+const About = ({ isDarkMode }) => (
   <section id="about" className="py-32 scroll-mt-24 border-t border-white/5 overflow-hidden">
     <div className="grid lg:grid-cols-2 gap-16 items-center">
-      
-      {/* LEFT COLUMN: EDITORIAL CONTENT */}
       <FadeInWhenVisible>
         <div className="space-y-10">
           <div className="space-y-4">
@@ -183,11 +222,9 @@ const About = ({ isDarkMode }: { isDarkMode: boolean }) => (
               Beyond <br /> <span className="text-indigo-600">Learning.</span>
             </h2>
           </div>
-          
           <p className={`text-xl leading-relaxed max-w-lg ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
-            We don't just teach Class 1-12; we engineer success. Our ecosystem combines **AIR Top-100 mentors** with adaptive AI to create a personalized journey for PCM, PCB, and Commerce.
+            We don't just teach Class 1-12; we engineer success. Our ecosystem combines **AIR Top-100 mentors** with adaptive AI to create a personalized journey.
           </p>
-
           <div className="flex flex-col gap-8">
              <div className="flex items-start gap-6">
                 <div className={`h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center ${isDarkMode ? 'bg-white/5' : 'bg-indigo-50'}`}>
@@ -198,7 +235,6 @@ const About = ({ isDarkMode }: { isDarkMode: boolean }) => (
                    <p className="text-sm opacity-60">Learn directly from those who conquered JEE & NEET.</p>
                 </div>
              </div>
-             
              <div className="flex items-start gap-6">
                 <div className={`h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center ${isDarkMode ? 'bg-white/5' : 'bg-indigo-50'}`}>
                    <Target className="text-indigo-600" size={32} />
@@ -212,70 +248,33 @@ const About = ({ isDarkMode }: { isDarkMode: boolean }) => (
         </div>
       </FadeInWhenVisible>
 
-      {/* RIGHT COLUMN: FOUR-QUADRANT MOSAIC (4 IMAGES) */}
       <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[650px]">
-        {/* Top Left: Group Study */}
-        <motion.div 
-          whileHover={{ scale: 0.98 }}
-          className="rounded-[40px] overflow-hidden shadow-2xl relative group"
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-            alt="Collaborative Learning"
-          />
+        <motion.div whileHover={{ scale: 0.98 }} className="rounded-[40px] overflow-hidden shadow-2xl relative group">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Collaborative Learning" />
           <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent" />
         </motion.div>
-
-        {/* Top Right: One-on-one help */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="rounded-[40px] overflow-hidden shadow-xl border-4 border-transparent hover:border-indigo-500 transition-all bg-indigo-600 flex items-center justify-center"
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800" 
-            className="w-full h-full object-cover opacity-60" 
-            alt="One-on-one help"
-          />
+        <motion.div whileHover={{ scale: 1.02 }} className="rounded-[40px] overflow-hidden shadow-xl bg-indigo-600 flex items-center justify-center relative">
+          <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800" className="w-full h-full object-cover opacity-60" alt="Mentorship" />
           <div className="absolute flex flex-col items-center text-white p-4">
              <Users size={32} className="mb-2" />
-             <span className="text-[10px] font-black uppercase tracking-widest text-center">Personalized <br/> Mentorship</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Personalized Mentorship</span>
           </div>
         </motion.div>
-        
-        {/* Bottom Left: Concept Visualization */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="rounded-[40px] overflow-hidden shadow-xl border-4 border-transparent hover:border-indigo-500 transition-all bg-indigo-600 flex items-center justify-center"
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800" 
-            className="w-full h-full object-cover opacity-60" 
-            alt="Concept Visualization"
-          />
+        <motion.div whileHover={{ scale: 1.02 }} className="rounded-[40px] overflow-hidden shadow-xl bg-indigo-600 flex items-center justify-center relative">
+          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800" className="w-full h-full object-cover opacity-60" alt="Visualization" />
           <div className="absolute flex flex-col items-center text-white p-4">
              <Cpu size={32} className="mb-2" />
-             <span className="text-[10px] font-black uppercase tracking-widest text-center">Interactive <br/> 3D Animations</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Interactive Animations</span>
           </div>
         </motion.div>
-
-        {/* Bottom Right: Test Preparation */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="rounded-[40px] overflow-hidden shadow-xl border-4 border-transparent hover:border-indigo-500 transition-all bg-indigo-600 flex items-center justify-center"
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?w=800" 
-            className="w-full h-full object-cover opacity-60" 
-            alt="Test Preparation"
-          />
+        <motion.div whileHover={{ scale: 1.02 }} className="rounded-[40px] overflow-hidden shadow-xl bg-indigo-600 flex items-center justify-center relative">
+          <img src="https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?w=800" className="w-full h-full object-cover opacity-60" alt="Focus" />
           <div className="absolute flex flex-col items-center text-white p-4">
              <Target size={32} className="mb-2" />
-             <span className="text-[10px] font-black uppercase tracking-widest text-center">Competitive <br/> Exam Focus</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-center">Exam Focus</span>
           </div>
         </motion.div>
       </div>
-
     </div>
   </section>
 );
@@ -287,47 +286,18 @@ const Services = ({ isDarkMode }) => (
         <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
           The Ultimate <span className="text-indigo-600">Learning Toolkit.</span>
         </h2>
-        <p className="opacity-60 text-lg font-medium">Tools designed to help you top your school exams and crack national entrance tests.</p>
+        <p className="opacity-60 text-lg font-medium">Tools designed to help you top your school exams.</p>
       </div>
-
       <div className="grid md:grid-cols-3 gap-8">
         {[
-          { 
-            i: BookOpen, 
-            t: "NCERT & Board Solutions", 
-            d: "Step-by-step solutions for all NCERT textbooks and State Board previous year papers." 
-          },
-          { 
-            i: MessageSquare, 
-            t: "Instant Doubt Solving", 
-            d: "Stuck on a Math problem? Snap a photo and get video solutions from experts in 60 seconds." 
-          },
-          { 
-            i: Target, 
-            t: "JEE / NEET / CUET Prep", 
-            d: "Specialized mock tests, rank predictors, and bridge courses for Class 11 & 12 aspirants." 
-          },
-          { 
-            i: Video, 
-            t: "Concept 3D Animations", 
-            d: "Visualize complex Biology and Physics concepts through high-quality 3D animated lessons." 
-          },
-          { 
-            i: Award, 
-            t: "Olympiad Training", 
-            d: "Dedicated modules for IMO, NSO, and NTSE to build a strong foundation from Class 6." 
-          },
-          { 
-            i: FileText, 
-            t: "Personalized Notes", 
-            d: "Handwritten revision notes and mind maps for quick last-minute exam preparation." 
-          }
+          { i: BookOpen, t: "NCERT & Board Solutions", d: "Step-by-step solutions for all textbooks." },
+          { i: MessageSquare, t: "Instant Doubt Solving", d: "Snap a photo and get video solutions in 60 seconds." },
+          { i: Target, t: "JEE / NEET Prep", d: "Specialized mock tests and rank predictors." },
+          { i: Video, t: "Concept 3D Animations", d: "Visualize complex Biology and Physics concepts." },
+          { i: Award, t: "Olympiad Training", d: "Dedicated modules for IMO, NSO, and NTSE." },
+          { i: FileText, t: "Personalized Notes", d: "Handwritten revision notes and mind maps." }
         ].map((item, idx) => (
-          <div 
-            key={idx} 
-            className={`p-10 rounded-[40px] border transition-all duration-300 hover:-translate-y-2 group
-              ${isDarkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl'}`}
-          >
+          <div key={idx} className={`p-10 rounded-[40px] border transition-all duration-300 hover:-translate-y-2 group ${isDarkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl'}`}>
             <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-colors ${isDarkMode ? 'bg-indigo-500/10' : 'bg-indigo-50 group-hover:bg-indigo-600'}`}>
               <item.i className={`transition-colors ${isDarkMode ? 'text-indigo-500' : 'text-indigo-600 group-hover:text-white'}`} size={32} />
             </div>
@@ -347,49 +317,17 @@ const Plans = ({ isDarkMode }) => (
         <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
           Choose Your <span className="text-indigo-600">Academic Tier.</span>
         </h2>
-        <p className="opacity-60 font-medium">Affordable excellence for every Indian student.</p>
       </div>
-
       <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {[
-          { 
-            n: "Foundations (Class 1-5)", 
-            p: "₹499", 
-            f: ["All Primary Subjects", "Interactive Animation Lessons", "Mental Math & Grammar", "Parent Progress Portal"],
-            color: "from-blue-500/20 to-transparent"
-          },
-          { 
-            n: "Achievers (Class 6-10)", 
-            p: "₹999", 
-            f: ["Maths, Science, SST, English", "Olympiad Preparation", "Foundation for NTSE", "Weekly Live Doubt Sessions"],
-            h: true, // Recommended Plan
-            color: "from-indigo-600/20 to-transparent"
-          },
-          { 
-            n: "Masters (Class 11-12)", 
-            p: "₹1499", 
-            f: ["Streams: PCM, PCB, Commerce, Arts", "JEE/NEET/CUET Special Modules", "Personalized Career Mentorship", "Previous Year Paper Analysis"],
-            color: "from-purple-500/20 to-transparent"
-          }
+          { n: "Foundations (Class 1-5)", p: "₹499", f: ["All Primary Subjects", "Animation Lessons", "Parent Progress Portal"] },
+          { n: "Achievers (Class 6-10)", p: "₹999", f: ["Maths, Science, SST", "Olympiad Preparation", "Weekly Live Sessions"], h: true },
+          { n: "Masters (Class 11-12)", p: "₹1499", f: ["PCM, PCB, Commerce", "JEE/NEET Modules", "Career Mentorship"] }
         ].map((plan, i) => (
-          <div 
-            key={i} 
-            className={`p-10 rounded-[40px] border relative flex flex-col transition-all hover:scale-[1.02] duration-300
-              ${plan.h ? 'border-indigo-600 bg-indigo-600/5 ring-2 ring-indigo-600 shadow-2xl shadow-indigo-600/20' : isDarkMode ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white shadow-lg'}`}
-          >
-            {plan.h && (
-              <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg">
-                Most Popular
-              </span>
-            )}
-            
+          <div key={i} className={`p-10 rounded-[40px] border relative flex flex-col transition-all hover:scale-[1.02] duration-300 ${plan.h ? 'border-indigo-600 bg-indigo-600/5 ring-2 ring-indigo-600 shadow-2xl shadow-indigo-600/20' : isDarkMode ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white shadow-lg'}`}>
+            {plan.h && <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg">Most Popular</span>}
             <h3 className={`text-2xl font-black mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{plan.n}</h3>
-            <div className={`text-6xl font-black mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-              {plan.p}
-              <span className="text-lg font-normal opacity-40 italic">/month</span>
-            </div>
-            <p className="text-xs font-bold text-indigo-500 mb-8 uppercase tracking-widest">Enroll for NAT 0 RS Scholarship</p>
-            
+            <div className={`text-6xl font-black mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{plan.p}<span className="text-lg font-normal opacity-40 italic">/mo</span></div>
             <ul className="space-y-4 mb-12 flex-grow">
               {plan.f.map(f => (
                 <li key={f} className="flex gap-3 items-start font-medium text-sm leading-tight">
@@ -398,13 +336,7 @@ const Plans = ({ isDarkMode }) => (
                 </li>
               ))}
             </ul>
-
-            <button 
-              className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all
-                ${plan.h ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/30' : 'bg-indigo-600/10 text-indigo-600 hover:bg-indigo-600 hover:text-white'}`}
-            >
-              Enroll Now
-            </button>
+            <button className={`w-full py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${plan.h ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/30' : 'bg-indigo-600/10 text-indigo-600 hover:bg-indigo-600 hover:text-white'}`}>Enroll Now</button>
           </div>
         ))}
       </div>
@@ -414,91 +346,30 @@ const Plans = ({ isDarkMode }) => (
 
 const Contact = ({ isDarkMode }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setShowConfetti(true);
-    // Let confetti run for a moment before switching view
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setShowConfetti(false);
-    }, 1500);
-  };
+  const handleSubmit = (e) => { e.preventDefault(); setIsSubmitted(true); };
 
   return (
     <section id="contact" className="py-32 mb-20">
       <FadeInWhenVisible>
         <div className={`p-16 rounded-[60px] border grid lg:grid-cols-2 gap-16 items-center overflow-hidden relative ${isDarkMode ? 'bg-indigo-600/10 border-indigo-600/20' : 'bg-slate-900 text-white border-transparent'}`}>
-          
-          {/* Confetti Particles Effect */}
-          {showConfetti && (
-            <div className="absolute inset-0 pointer-events-none z-50">
-              {[...Array(40)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ 
-                    top: "60%", 
-                    left: "75%", 
-                    scale: 0,
-                    rotate: 0 
-                  }}
-                  animate={{ 
-                    top: [`${Math.random() * 100}%`], 
-                    left: [`${Math.random() * 100}%`], 
-                    scale: [0, 1, 0],
-                    rotate: 360 
-                  }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="absolute w-2 h-2 rounded-sm"
-                  style={{ backgroundColor: ["#4F46E5", "#FACC15", "#10B981", "#EC4899"][i % 4] }}
-                />
-              ))}
-            </div>
-          )}
-
           <div className="space-y-8">
             <h2 className="text-6xl font-black tracking-tighter">Ready to <br/> <span className="text-indigo-500">Transform?</span></h2>
-            <div className="space-y-4">
-               <div className="flex items-center gap-4 text-lg font-medium"><Mail className="text-indigo-500"/> hello@tutionpro.com</div>
-            </div>
+            <div className="flex items-center gap-4 text-lg font-medium"><Mail className="text-indigo-500"/> hello@tutionpro.com</div>
           </div>
-
           <div className="relative min-h-[350px] flex flex-col justify-center">
             <AnimatePresence mode="wait">
               {!isSubmitted ? (
-                <motion.form 
-                  key="form"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  onSubmit={handleSubmit}
-                  className="space-y-4"
-                >
+                <motion.form key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} onSubmit={handleSubmit} className="space-y-4">
                   <input required placeholder="Full Name" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
                   <input required type="email" placeholder="Email" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
                   <textarea required placeholder="Message" rows={4} className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
-                  <button type="submit" className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-700 active:scale-[0.98] transition-all relative overflow-hidden">
-                    Send Application
-                  </button>
+                  <button type="submit" className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-700 active:scale-[0.98] transition-all">Send Application</button>
                 </motion.form>
               ) : (
-                <motion.div 
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center space-y-6"
-                >
-                  <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40">
-                    <Check size={48} className="text-white" strokeWidth={4} />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-3xl font-black">Application Sent!</h3>
-                    <p className="opacity-70 text-lg">Check your email for the next steps. <br/> Welcome to the future.</p>
-                  </div>
-                  <button onClick={() => setIsSubmitted(false)} className="text-indigo-400 font-bold hover:underline">
-                    Send another message
-                  </button>
+                <motion.div key="success" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-center space-y-6">
+                  <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40"><Check size={48} className="text-white" strokeWidth={4} /></div>
+                  <h3 className="text-3xl font-black">Application Sent!</h3>
+                  <button onClick={() => setIsSubmitted(false)} className="text-indigo-400 font-bold hover:underline">Send another</button>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -515,9 +386,24 @@ export default function App() {
   const [activePage, setActivePage] = useState("home");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isMobileMenu, setIsMobileMenu] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
+  // Handle Initial Loading Animation (Session-based)
+  useEffect(() => {
+    const hasSeenIntro = sessionStorage.getItem("hasSeenIntro");
+    if (hasSeenIntro) {
+      setIsLoading(false);
+    } else {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        sessionStorage.setItem("hasSeenIntro", "true");
+      }, 2500); // Intro duration
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const navigateTo = (id) => {
     const el = document.getElementById(id);
@@ -530,15 +416,6 @@ export default function App() {
       setIsMobileMenu(false);
     }
   };
-
-  useEffect(() => {
-    const handlePopState = () => {
-      const hash = window.location.hash.replace("#", "") || "home";
-      navigateTo(hash);
-    };
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -557,14 +434,15 @@ export default function App() {
   return (
     <div className={`transition-colors duration-500 selection:bg-indigo-600 selection:text-white ${isDarkMode ? "bg-slate-950 text-white" : "bg-white text-slate-900"}`}>
       
-      {/* 1. TOP ADVERTISEMENT BANNER WITH CLAIM BUTTON */}
+      {/* 0. WEBSITE PRELOADER */}
+      <AnimatePresence>
+        {isLoading && <Preloader isDarkMode={isDarkMode} key="loader" />}
+      </AnimatePresence>
+
+      {/* 1. TOP ADVERTISEMENT BANNER */}
       <div className="fixed top-0 left-0 w-full z-[120] bg-indigo-600 text-white py-2 border-b border-indigo-400/30 overflow-hidden shadow-xl">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative h-10">
-          <motion.div 
-            animate={{ x: ["0%", "-50%"] }} 
-            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-            className="whitespace-nowrap flex gap-10 items-center text-[10px] md:text-xs font-black uppercase tracking-[0.1em]"
-          >
+          <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }} className="whitespace-nowrap flex gap-10 items-center text-[10px] md:text-xs font-black uppercase tracking-[0.1em]">
             {[1, 2].map((i) => (
               <div key={i} className="flex gap-10 items-center">
                 <span>🔥 NAT Admission is LOCKED at ₹0! 🔥</span>
@@ -575,7 +453,6 @@ export default function App() {
               </div>
             ))}
           </motion.div>
-          
           <div className="hidden sm:flex items-center gap-3 bg-indigo-700 pl-6 pr-2 py-1 rounded-l-full shadow-[-20px_0_30px_rgba(79,70,229,1)] z-10">
             <span className="text-[10px] font-bold tracking-tighter">ENDS IN:</span>
             <CountdownTimer />
@@ -592,17 +469,13 @@ export default function App() {
             <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white italic shadow-lg shadow-indigo-600/20">T</div>
             <span>Tution<span className="text-indigo-600">Pro</span></span>
           </div>
-
           <div className="hidden md:flex items-center gap-2 bg-indigo-500/5 p-1 rounded-2xl border border-indigo-500/10">
             {NAV_LINKS.map(link => (
-              <button key={link.id} onClick={() => navigateTo(link.id)} 
-                className={`px-5 py-2 font-bold text-sm rounded-xl transition-all 
-                ${activePage === link.id ? "text-white bg-indigo-600 shadow-md" : "opacity-50 hover:opacity-100"}`}>
+              <button key={link.id} onClick={() => navigateTo(link.id)} className={`px-5 py-2 font-bold text-sm rounded-xl transition-all ${activePage === link.id ? "text-white bg-indigo-600 shadow-md" : "opacity-50 hover:opacity-100"}`}>
                 {link.name}
               </button>
             ))}
           </div>
-
           <div className="flex items-center gap-4">
             <button onClick={() => setIsDarkMode(!isDarkMode)} className={`p-3 rounded-2xl transition-all ${isDarkMode ? 'bg-white/5 text-yellow-400' : 'bg-slate-100 text-indigo-600'}`}>
               {isDarkMode ? <Sun size={22}/> : <Moon size={22}/>}
@@ -612,10 +485,9 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Floating Buttons */}
       <div className="fixed bottom-6 right-6 z-[120] flex flex-col gap-4">
-        <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} href="https://wa.me/911234567890" target="_blank" className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl"><MessageCircle size={32} fill="currentColor" /></motion.a>
-        <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} href="tel:+911234567890" className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-2xl"><Phone size={28} fill="currentColor" /></motion.a>
+        <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} href="#" className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl"><MessageCircle size={32} fill="currentColor" /></motion.a>
+        <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} href="#" className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-2xl"><Phone size={28} fill="currentColor" /></motion.a>
       </div>
 
       <main className="max-w-7xl mx-auto px-6">
@@ -640,7 +512,6 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Footer */}
       <footer className={`py-20 border-t ${isDarkMode ? 'border-white/5 bg-slate-950' : 'border-slate-200 bg-slate-50'}`}>
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
           <div className="col-span-2 space-y-6">
@@ -648,7 +519,7 @@ export default function App() {
               <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white italic">T</div>
               <span>Tution<span className="text-indigo-600">Pro</span></span>
             </div>
-            <p className="max-w-xs opacity-50 text-lg">Empowering the next generation of engineers with real-world skills and expert guidance.</p>
+            <p className="max-w-xs opacity-50 text-lg">Empowering the next generation of engineers with expert guidance.</p>
           </div>
           <div className="space-y-4">
             <h4 className="font-bold uppercase tracking-widest text-sm text-indigo-600">Quick Links</h4>
@@ -664,7 +535,7 @@ export default function App() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 mt-20 pt-10 border-t border-white/5 text-center opacity-30 text-sm font-medium">
-          © 2026 TutionPro Education Group. NAT 0 RS Admission Campaign Active.
+          © 2026 TutionPro Education Group.
         </div>
       </footer>
     </div>
