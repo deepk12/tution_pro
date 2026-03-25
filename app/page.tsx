@@ -6,13 +6,15 @@ import {
   Home, Info, Briefcase, CreditCard, Mail, ArrowRight, Zap, Users, 
   Check, Sun, Moon, Menu, X, Facebook, Twitter, Instagram, Linkedin,
   Globe, Shield, Cpu, GraduationCap, Award, MessageSquare, Phone, 
-  MessageCircle, BookOpen, Target, Video, FileText, Clock, Trophy, MapPin, Send
+  MessageCircle, BookOpen, Target, Video, FileText, Clock, Trophy,
+  MapPin, Send, ZoomIn
 } from "lucide-react";
 
 // --- Configuration & Data ---
 const NAV_LINKS = [
   { id: "home", name: "Home", icon: Home },
   { id: "about", name: "About Us", icon: Info },
+  { id: "blog", name: "Tips & News", icon: BookOpen },
   { id: "gallery", name: "Gallery", icon: Globe },
   { id: "why-us", name: "Why Choose Us", icon: Target },
   { id: "services", name: "Services", icon: Briefcase },
@@ -288,9 +290,145 @@ const About = ({ isDarkMode }) => (
   </section>
 );
 
+const Blog = ({ isDarkMode }) => {
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  const posts = [
+    {
+      id: 1,
+      title: "How to Score 95% in Class 10 Boards",
+      desc: "Success isn't just about hard work; it's about the 80/20 rule. Focus on high-weightage NCERT topics first.",
+      content: "To score 95%, you must master the NCERT back-to-back. 1. Solve the last 10 years' question papers. 2. Focus on diagrams in Science and maps in SST. 3. Practice Math daily for 2 hours. At TutionPro, we provide 'Chapter Cheat Sheets' that summarize everything in 2 pages.",
+      tag: "Strategy",
+      date: "March 2026",
+      icon: Trophy
+    },
+    {
+      id: 2,
+      title: "The Ultimate 14-Hour Study Timetable",
+      desc: "Scientific breakdown of study slots, including the Pomodoro technique to keep your brain fresh.",
+      content: "The best timetable follows a 3-3-3-3 structure. 3 hours for heavy subjects (Math/Physics) in the morning, 3 hours for theory in the afternoon, and 3 hours for revision at night. Use 50 minutes of study followed by a 10-minute break. This prevents brain fatigue.",
+      tag: "Productivity",
+      date: "Feb 2026",
+      icon: Clock
+    },
+    {
+      id: 3,
+      title: "Overcoming Math Anxiety",
+      desc: "Stop fearing numbers. Learn how our visualization techniques make complex Algebra feel like a game.",
+      content: "Math anxiety is psychological. Start with easy problems to build 'dopamine wins.' Use visual tools like graphs and 3D shapes to understand why a formula works instead of just memorizing it. Our mentors in Indirapuram specialize in 'Fear-Free Mathematics.'",
+      tag: "Guidance",
+      date: "Jan 2026",
+      icon: Target
+    }
+  ];
+
+  return (
+    <section id="blog" className="py-32 scroll-mt-24">
+      <FadeInWhenVisible>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+          <div className="text-center md:text-left">
+            <h2 className={`text-5xl md:text-6xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              Academic <span className="text-indigo-600">Insights.</span>
+            </h2>
+            <p className="opacity-60 text-lg mt-2 font-medium">Expert tips for students in Abhay Khand.</p>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <motion.div 
+              key={post.id}
+              whileHover={{ y: -10 }}
+              className={`p-10 rounded-[48px] border flex flex-col h-full transition-all cursor-pointer ${
+                isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200 shadow-xl'
+              }`}
+              onClick={() => setSelectedPost(post)}
+            >
+              <div className="flex justify-between items-start mb-8">
+                <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                  <post.icon size={28} />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">{post.date}</span>
+              </div>
+              <h3 className={`text-2xl font-black mb-4 leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{post.title}</h3>
+              <p className="opacity-60 text-sm leading-relaxed mb-8 flex-grow">{post.desc}</p>
+              <button className="flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-widest group">
+                Read Full Guide <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+              </button>
+            </motion.div>
+          ))}
+        </div>
+      </FadeInWhenVisible>
+
+      {/* --- BLOG READER MODAL --- */}
+      <AnimatePresence>
+        {selectedPost && (
+          <div className="fixed inset-0 z-[300] flex items-center justify-center p-6 md:p-20">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedPost(null)}
+              className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+            />
+            
+            {/* Modal Content */}
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className={`relative w-full max-w-2xl max-h-[80vh] overflow-y-auto p-10 md:p-16 rounded-[60px] border shadow-2xl ${
+                isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'
+              }`}
+            >
+              <button 
+                onClick={() => setSelectedPost(null)}
+                className="absolute top-8 right-8 p-3 bg-indigo-600/10 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition-all"
+              >
+                <X size={24} />
+              </button>
+
+              <span className="px-4 py-1.5 bg-indigo-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest">
+                {selectedPost.tag}
+              </span>
+              
+              <h2 className={`text-4xl md:text-5xl font-black tracking-tighter mt-6 mb-8 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                {selectedPost.title}
+              </h2>
+              
+              <div className={`text-lg leading-relaxed space-y-4 ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+                {selectedPost.content.split('. ').map((sentence, i) => (
+                  <p key={i}>{sentence}.</p>
+                ))}
+              </div>
+
+              <div className="mt-12 pt-10 border-t border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-black italic">T</div>
+                  <span className="font-bold text-sm">TutionPro Editorial</span>
+                </div>
+                <button 
+                  onClick={() => setSelectedPost(null)}
+                  className="text-indigo-600 font-black text-xs uppercase tracking-widest hover:underline"
+                >
+                  Close Reader
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+
 const Gallery = ({ isDarkMode }) => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const photos = [
-    { url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Smart Class" },
+    { url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop", title: "Smart Class" },
     { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500", title: "Study Focus" },
     { url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500", title: "Group Session" },
     { url: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500", title: "Top Results" },
@@ -300,47 +438,122 @@ const Gallery = ({ isDarkMode }) => {
     { url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500", title: "Coding Class" },
     { url: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500", title: "Library" },
     { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500", title: "Doubt Clearing" },
-    { url: "https://plus.unsplash.com/premium_photo-1664303932375-21fe1d60b886?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Success Gala" },
+    { url: "https://plus.unsplash.com/premium_photo-1664303932375-21fe1d60b886?q=80&w=2070&auto=format&fit=crop", title: "Success Gala" },
     { url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500", title: "Workshops" },
   ];
 
+  // Container variants for staggered children animation
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1, // Each image pops up 0.1s after the previous
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0, scale: 0.9 },
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      scale: 1,
+      transition: { type: "spring", stiffness: 100, damping: 12 } 
+    },
+  };
+
   return (
-    <section id="gallery" className="py-32 scroll-mt-24">
+    <section id="gallery" className="py-32 scroll-mt-24 overflow-hidden">
       <FadeInWhenVisible>
         <div className="mb-16">
-          <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+          <motion.h2 
+            initial={{ x: -20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
+          >
             Gallery <span className="text-indigo-600">Hub.</span>
-          </h2>
-          <p className="opacity-60 text-lg mt-2 font-medium">12+ reasons why TutionPro is the top choice.</p>
+          </motion.h2>
+          <p className="opacity-60 text-lg mt-2 font-medium">Click any photo to expand.</p>
         </div>
 
-        {/* Dense 12-Photo Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/* 1. STAGGERED GRID ANIMATION */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
           {photos.map((photo, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ scale: 0.96, rotate: 1 }}
-              transition={{ duration: 0.3 }}
-              className={`relative aspect-square overflow-hidden rounded-3xl group cursor-pointer ${
-                isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-slate-100 border border-slate-200 shadow-md'
+              variants={itemVariants}
+              whileHover={{ 
+                scale: 0.98, 
+                rotate: idx % 2 === 0 ? 1 : -1, // Subtle random-feeling tilt
+                transition: { duration: 0.2 } 
+              }}
+              onClick={() => setSelectedImage(photo)}
+              className={`relative aspect-square overflow-hidden rounded-[2rem] group cursor-pointer border-2 transition-colors ${
+                isDarkMode ? 'bg-white/5 border-white/5 hover:border-indigo-500/50' : 'bg-slate-100 border-transparent shadow-xl'
               }`}
             >
               <img 
                 src={photo.url} 
                 alt={photo.title} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               />
               
-              {/* Overlay with Title */}
-              <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
-                <p className="text-white font-bold text-sm tracking-widest uppercase">
+              {/* Animated Overlay */}
+              <motion.div className="absolute inset-0 bg-indigo-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center backdrop-blur-[2px]">
+                <div className="bg-white/20 p-3 rounded-full backdrop-blur-md mb-2 translate-y-4 group-hover:translate-y-0 transition-transform">
+                  <ZoomIn className="text-white" size={24} />
+                </div>
+                <p className="text-white font-black text-xs uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform delay-75">
                   {photo.title}
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </FadeInWhenVisible>
+
+      {/* 2. FULL SCREEN LIGHTBOX TRANSITION */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.button 
+              className="absolute top-10 right-10 p-4 bg-white/10 text-white rounded-full hover:bg-red-500 transition-colors"
+              whileHover={{ rotate: 90 }}
+            >
+              <X size={32} />
+            </motion.button>
+
+            <motion.div 
+              initial={{ scale: 0.5, y: 100, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.5, y: 100, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="relative max-w-5xl w-full aspect-video rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white/10"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image
+            >
+              <img src={selectedImage.url} className="w-full h-full object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black/80 to-transparent">
+                <h3 className="text-3xl font-black text-white italic tracking-tighter">
+                  {selectedImage.title}
+                </h3>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
@@ -829,6 +1042,7 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-6">
         <Hero navigateTo={navigateTo} isDarkMode={isDarkMode} />
         <About isDarkMode={isDarkMode} />
+        <Blog isDarkMode={isDarkMode} />
         <Gallery isDarkMode={isDarkMode} />
         <WhyChooseUs isDarkMode={isDarkMode} />
         <Services isDarkMode={isDarkMode} />
