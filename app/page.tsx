@@ -6,14 +6,17 @@ import {
   Home, Info, Briefcase, CreditCard, Mail, ArrowRight, Zap, Users, 
   Check, Sun, Moon, Menu, X, Facebook, Twitter, Instagram, Linkedin,
   Globe, Shield, Cpu, GraduationCap, Award, MessageSquare, Phone, 
-  MessageCircle, BookOpen, Target, Video, FileText, Clock, Trophy
+  MessageCircle, BookOpen, Target, Video, FileText, Clock, Trophy, MapPin, Send
 } from "lucide-react";
 
 // --- Configuration & Data ---
 const NAV_LINKS = [
   { id: "home", name: "Home", icon: Home },
   { id: "about", name: "About Us", icon: Info },
+  { id: "gallery", name: "Gallery", icon: Globe },
+  { id: "why-us", name: "Why Choose Us", icon: Target },
   { id: "services", name: "Services", icon: Briefcase },
+  { id: "testimonials", name: "Success Stories", icon: MessageCircle },
   { id: "plans", name: "Plans", icon: CreditCard },
   { id: "contact", name: "Contact", icon: Mail },
 ];
@@ -285,6 +288,106 @@ const About = ({ isDarkMode }) => (
   </section>
 );
 
+const Gallery = ({ isDarkMode }) => {
+  const photos = [
+    { url: "https://images.unsplash.com/photo-1523240715181-01489a943ee2?w=500", title: "Smart Class" },
+    { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500", title: "Study Focus" },
+    { url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500", title: "Group Session" },
+    { url: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500", title: "Top Results" },
+    { url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500", title: "Tech Lab" },
+    { url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500", title: "Expert Faculty" },
+    { url: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=500", title: "Campus Life" },
+    { url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500", title: "Coding Class" },
+    { url: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500", title: "Library" },
+    { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500", title: "Doubt Clearing" },
+    { url: "https://images.unsplash.com/photo-1513258496099-48168024adb0?w=500", title: "Success Gala" },
+    { url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500", title: "Workshops" },
+  ];
+
+  return (
+    <section id="gallery" className="py-32 scroll-mt-24">
+      <FadeInWhenVisible>
+        <div className="mb-16">
+          <h2 className={`text-5xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            Gallery <span className="text-indigo-600">Hub.</span>
+          </h2>
+          <p className="opacity-60 text-lg mt-2 font-medium">12+ reasons why TutionPro is the top choice.</p>
+        </div>
+
+        {/* Dense 12-Photo Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {photos.map((photo, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ scale: 0.96, rotate: 1 }}
+              transition={{ duration: 0.3 }}
+              className={`relative aspect-square overflow-hidden rounded-3xl group cursor-pointer ${
+                isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-slate-100 border border-slate-200 shadow-md'
+              }`}
+            >
+              <img 
+                src={photo.url} 
+                alt={photo.title} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100" 
+              />
+              
+              {/* Overlay with Title */}
+              <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
+                <p className="text-white font-bold text-sm tracking-widest uppercase">
+                  {photo.title}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </FadeInWhenVisible>
+    </section>
+  );
+};
+
+const WhyChooseUs = ({ isDarkMode }) => {
+  const features = [
+    { title: "Personalized Attention", desc: "Small batches ensuring every student gets the focus they deserve.", icon: Users, color: "bg-blue-500" },
+    { title: "Regular Doubt Sessions", desc: "Dedicated time slots to clear every hurdle in your learning journey.", icon: MessageSquare, color: "bg-purple-500" },
+    { title: "Weekly Tests", desc: "Rigorous assessment to ensure concept clarity and exam readiness.", icon: FileText, color: "bg-orange-500" },
+    { title: "Performance Tracking", desc: "Detailed analytics for parents and students to monitor growth.", icon: Target, color: "bg-green-500" },
+    { title: "Affordable Fees", desc: "Premium quality education at prices that don't break the bank.", icon: CreditCard, color: "bg-yellow-500" },
+    { title: "Smart Classrooms", desc: "Interactive digital tools and 3D animations for better visualization.", icon: Cpu, color: "bg-indigo-500" },
+  ];
+
+  return (
+    <section id="why-us" className="py-32 scroll-mt-24">
+      <FadeInWhenVisible>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="max-w-2xl">
+            <h2 className={`text-6xl font-black tracking-tighter leading-[0.9] mb-6 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              Why Students <br /> <span className="text-indigo-600">Trust TutionPro.</span>
+            </h2>
+            <p className="opacity-60 text-lg font-medium">We combine traditional teaching values with modern technology.</p>
+          </div>
+          <div className="hidden lg:block h-px flex-grow bg-indigo-600/20 mx-10 mb-6"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((f, idx) => (
+            <motion.div 
+              key={idx}
+              whileHover={{ y: -5 }}
+              className={`p-8 rounded-[32px] border transition-all ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}
+            >
+              <div className={`w-12 h-12 rounded-2xl ${f.color} flex items-center justify-center text-white mb-6 shadow-lg`}>
+                <f.icon size={24} />
+              </div>
+              <h3 className="text-xl font-black mb-3">{f.title}</h3>
+              <p className="opacity-60 text-sm leading-relaxed">{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </FadeInWhenVisible>
+    </section>
+  );
+};
+
 const Services = ({ isDarkMode }) => (
   <section id="services" className="py-32 scroll-mt-24">
     <FadeInWhenVisible>
@@ -315,6 +418,84 @@ const Services = ({ isDarkMode }) => (
     </FadeInWhenVisible>
   </section>
 );
+const Testimonials = ({ isDarkMode }) => {
+  const reviews = [
+    { 
+      text: "Best coaching! My marks improved from 60% to 90% in just 6 months. The focus on basics is life-changing.", 
+      author: "Aditya Sharma", 
+      role: "Class 12 Student", 
+      tag: "Result" 
+    },
+    { 
+      text: "Teachers explain concepts very clearly. My daughter actually looks forward to her Math classes now!", 
+      author: "Mr. Rajesh Kumar", 
+      role: "Parent (Class 9)", 
+      tag: "Parent Feedback" 
+    },
+    { 
+      text: "The doubt solving feature is incredible. I uploaded a Physics problem at 10 PM and got a video solution instantly.", 
+      author: "Sneha Kapoor", 
+      role: "JEE Aspirant", 
+      tag: "Technology" 
+    },
+    { 
+      text: "Affordable fees but premium education. The smart classroom animations help in visualizing Biology perfectly.", 
+      author: "Ishan Singh", 
+      role: "Class 10 Student", 
+      tag: "Innovation" 
+    }
+  ];
+
+  return (
+    <section id="testimonials" className="py-32 scroll-mt-24">
+      <FadeInWhenVisible>
+        <div className="text-center mb-16 space-y-4">
+          <motion.span className="text-indigo-600 font-black uppercase tracking-widest text-xs">Real Stories</motion.span>
+          <h2 className={`text-5xl md:text-6xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            Voices of <span className="text-indigo-600">Success.</span>
+          </h2>
+        </div>
+
+        <div className="columns-1 md:columns-2 gap-6 space-y-6">
+          {reviews.map((rev, idx) => (
+            <motion.div 
+              key={idx}
+              whileHover={{ scale: 1.02 }}
+              className={`break-inside-avoid p-10 rounded-[40px] border flex flex-col gap-6 transition-all ${
+                isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white border-slate-100 shadow-xl'
+              }`}
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-lg">★</span>
+                  ))}
+                </div>
+                <span className="px-3 py-1 bg-indigo-600/10 text-indigo-500 rounded-full text-[10px] font-black uppercase tracking-widest">
+                  {rev.tag}
+                </span>
+              </div>
+              
+              <p className={`text-xl font-medium leading-relaxed italic ${isDarkMode ? 'text-gray-300' : 'text-slate-700'}`}>
+                “{rev.text}”
+              </p>
+
+              <div className="flex items-center gap-4 border-t pt-6 border-white/5">
+                <div className="h-12 w-12 bg-indigo-600 rounded-full flex items-center justify-center text-white font-black">
+                  {rev.author[0]}
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg">{rev.author}</h4>
+                  <p className="text-xs opacity-50">{rev.role}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </FadeInWhenVisible>
+    </section>
+  );
+};
 
 const Plans = ({ isDarkMode }) => (
   <section id="plans" className="py-32 scroll-mt-24">
@@ -352,36 +533,155 @@ const Plans = ({ isDarkMode }) => (
 
 const Contact = ({ isDarkMode }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const handleSubmit = (e) => { e.preventDefault(); setIsSubmitted(true); };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    // Reset after 5 seconds for demo purposes
+    setTimeout(() => setIsSubmitted(false), 5000);
+  };
+
+  const contactDetails = [
+    { 
+      icon: Phone, 
+      title: "Call Us", 
+      detail: "+91 95594 94070", 
+      link: "tel:+919559494070",
+      color: "bg-green-500"
+    },
+    { 
+      icon: Mail, 
+      title: "Email Us", 
+      detail: "hello@tutionpro.com", 
+      link: "mailto:hello@tutionpro.com",
+      color: "bg-blue-500"
+    },
+    { 
+      icon: MapPin, 
+      title: "Visit Us", 
+      detail: "Abhay Khand 4, Pocket 2, Indirapuram, Ghaziabad, UP 201014", 
+      link: "https://www.google.com/maps/search/Abhay+Khand+4+Indirapuram",
+      color: "bg-indigo-600",
+      isLocation: true // Unique flag for the 📍 effect
+    }
+  ];
 
   return (
-    <section id="contact" className="py-32 mb-20">
-      <FadeInWhenVisible>
-        <div className={`p-16 rounded-[60px] border grid lg:grid-cols-2 gap-16 items-center overflow-hidden relative ${isDarkMode ? 'bg-indigo-600/10 border-indigo-600/20' : 'bg-slate-900 text-white border-transparent'}`}>
-          <div className="space-y-8">
-            <h2 className="text-6xl font-black tracking-tighter">Ready to <br/> <span className="text-indigo-500">Transform?</span></h2>
-            <div className="flex items-center gap-4 text-lg font-medium"><Mail className="text-indigo-500"/> hello@tutionpro.com</div>
-          </div>
-          <div className="relative min-h-[350px] flex flex-col justify-center">
-            <AnimatePresence mode="wait">
-              {!isSubmitted ? (
-                <motion.form key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} onSubmit={handleSubmit} className="space-y-4">
-                  <input required placeholder="Full Name" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
-                  <input required type="email" placeholder="Email" className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
-                  <textarea required placeholder="Message" rows={4} className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 outline-none focus:border-indigo-500 transition-colors" />
-                  <button type="submit" className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-700 active:scale-[0.98] transition-all">Send Application</button>
-                </motion.form>
-              ) : (
-                <motion.div key="success" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-center space-y-6">
-                  <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40"><Check size={48} className="text-white" strokeWidth={4} /></div>
-                  <h3 className="text-3xl font-black">Application Sent!</h3>
-                  <button onClick={() => setIsSubmitted(false)} className="text-indigo-400 font-bold hover:underline">Send another</button>
-                </motion.div>
+    <section id="contact" className="py-32 scroll-mt-24">
+      {/* 1. Header Area */}
+      <div className="text-center mb-16 space-y-4">
+        <motion.span 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="text-indigo-600 font-black uppercase tracking-[0.3em] text-xs"
+        >
+          Get Started
+        </motion.span>
+        <h2 className={`text-5xl md:text-7xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+          Contact <span className="text-indigo-600">TutionPro.</span>
+        </h2>
+      </div>
+
+      {/* 2. Interactive Contact Cards */}
+      <div className="grid lg:grid-cols-3 gap-8 mb-20">
+        {contactDetails.map((item, idx) => (
+          <motion.a 
+            key={idx}
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+            whileHover={{ y: -10 }}
+            className={`group p-10 rounded-[48px] border flex flex-col items-center text-center gap-6 transition-all relative overflow-hidden ${
+              isDarkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white border-slate-100 shadow-2xl shadow-indigo-500/5 hover:shadow-indigo-500/10'
+            }`}
+          >
+            {/* The "📍" Specialized Icon Container */}
+            <div className="relative">
+              {item.isLocation && (
+                <span className="absolute inset-0 rounded-full bg-indigo-600/30 animate-ping"></span>
               )}
-            </AnimatePresence>
-          </div>
+              <div className={`relative w-20 h-20 ${item.color} rounded-3xl flex items-center justify-center text-white shadow-2xl transition-transform duration-500 ${item.isLocation ? 'rotate-12 group-hover:rotate-0' : 'group-hover:scale-110'}`}>
+                <item.icon size={32} fill="currentColor" className={item.isLocation ? "-rotate-12 group-hover:rotate-0 transition-transform" : ""} />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-black text-xs uppercase tracking-[0.2em] text-indigo-600">{item.title}</h4>
+              <p className={`text-xl font-bold leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                {item.detail}
+              </p>
+            </div>
+
+            <div className={`mt-auto px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${isDarkMode ? 'bg-white/10 text-white' : 'bg-indigo-50 text-indigo-600'}`}>
+              {item.isLocation ? "View on Map" : "Connect Now"}
+            </div>
+          </motion.a>
+        ))}
+      </div>
+
+      {/* 3. Map & Form Integrated Block */}
+      <div className={`rounded-[60px] border grid lg:grid-cols-2 overflow-hidden shadow-2xl ${
+        isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'
+      }`}>
+        
+        {/* Left: Professional Inquiry Form */}
+        <div className="p-10 lg:p-16 border-r border-white/5">
+          <h3 className="text-3xl font-black mb-8 tracking-tighter">Send an Inquiry</h3>
+          <AnimatePresence mode="wait">
+            {!isSubmitted ? (
+              <motion.form 
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onSubmit={handleSubmit} 
+                className="space-y-4"
+              >
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input required placeholder="Student Name" className={`w-full p-5 rounded-2xl border outline-none focus:border-indigo-500 transition-all ${isDarkMode ? 'bg-black/20 border-white/10 text-white' : 'bg-slate-50 border-slate-200'}`} />
+                  <input required placeholder="Class (e.g. 10th)" className={`w-full p-5 rounded-2xl border outline-none focus:border-indigo-500 transition-all ${isDarkMode ? 'bg-black/20 border-white/10 text-white' : 'bg-slate-50 border-slate-200'}`} />
+                </div>
+                <input required type="tel" placeholder="Mobile Number" className={`w-full p-5 rounded-2xl border outline-none focus:border-indigo-500 transition-all ${isDarkMode ? 'bg-black/20 border-white/10 text-white' : 'bg-slate-50 border-slate-200'}`} />
+                <textarea required placeholder="Your Message or Doubt" rows={4} className={`w-full p-5 rounded-2xl border outline-none focus:border-indigo-500 transition-all ${isDarkMode ? 'bg-black/20 border-white/10 text-white' : 'bg-slate-50 border-slate-200'}`} />
+                
+                <button type="submit" className="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-700 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+                  Submit Application <Send size={20} />
+                </button>
+              </motion.form>
+            ) : (
+              <motion.div 
+                key="success"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-10"
+              >
+                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-green-500/40">
+                  <Check size={40} className="text-white" strokeWidth={4} />
+                </div>
+                <h4 className="text-2xl font-black mb-2">Message Sent!</h4>
+                <p className="opacity-60">We'll contact you in Indirapuram shortly.</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </FadeInWhenVisible>
+
+        {/* Right: Targeted Map of Abhay Khand 4 */}
+        <div className="relative bg-slate-200 min-h-[500px]">
+          <iframe 
+            title="TutionPro Indirapuram Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.558368142718!2d77.369325975494!3d28.61528497567544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce510f2746401%3A0xed0189922e5242b8!2sAbhay%20Khand%204%2C%20Indirapuram%2C%20Ghaziabad%2C%20Uttar%20Pradesh%20201014!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
+            className={`absolute inset-0 w-full h-full border-0 ${isDarkMode ? 'grayscale invert-[0.9] contrast-[1.2] opacity-80' : ''}`}
+            allowFullScreen="" 
+            loading="lazy" 
+          />
+          {/* Subtle Overlay to prevent accidental scrolling on map */}
+          <div className="absolute inset-0 bg-transparent pointer-events-none group-hover:bg-indigo-600/5 transition-colors" />
+        </div>
+      </div>
     </section>
   );
 };
@@ -529,7 +829,10 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-6">
         <Hero navigateTo={navigateTo} isDarkMode={isDarkMode} />
         <About isDarkMode={isDarkMode} />
+        <Gallery isDarkMode={isDarkMode} />
+        <WhyChooseUs isDarkMode={isDarkMode} />
         <Services isDarkMode={isDarkMode} />
+        <Testimonials isDarkMode={isDarkMode} />
         <Plans isDarkMode={isDarkMode} />
         <Contact isDarkMode={isDarkMode} />
       </main>
