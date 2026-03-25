@@ -685,21 +685,50 @@ const Services = ({ isDarkMode }) => (
         </h2>
         <p className="opacity-60 text-lg font-medium">Tools designed to help you top your school exams.</p>
       </div>
+      
       <div className="grid md:grid-cols-3 gap-8">
         {[
+          { 
+            i: Users, 
+            t: "Home Tuition (1-on-1)", 
+            d: "Get a verified personal tutor at your home in Delhi/NCR",
+            isNew: true 
+          },
           { i: BookOpen, t: "NCERT & Board Solutions", d: "Step-by-step solutions for all textbooks." },
           { i: MessageSquare, t: "Instant Doubt Solving", d: "Snap a photo and get video solutions in 60 seconds." },
-          { i: Target, t: "JEE / NEET Prep", d: "Specialized mock tests and rank predictors." },
           { i: Video, t: "Concept 3D Animations", d: "Visualize complex Biology and Physics concepts." },
           { i: Award, t: "Olympiad Training", d: "Dedicated modules for IMO, NSO, and NTSE." },
           { i: FileText, t: "Personalized Notes", d: "Handwritten revision notes and mind maps." }
         ].map((item, idx) => (
-          <div key={idx} className={`p-10 rounded-[40px] border transition-all duration-300 hover:-translate-y-2 group ${isDarkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl'}`}>
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-colors ${isDarkMode ? 'bg-indigo-500/10' : 'bg-indigo-50 group-hover:bg-indigo-600'}`}>
-              <item.i className={`transition-colors ${isDarkMode ? 'text-indigo-500' : 'text-indigo-600 group-hover:text-white'}`} size={32} />
+          <div 
+            key={idx} 
+            className={`p-10 rounded-[40px] border transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden ${
+              isDarkMode 
+                ? 'bg-white/5 border-white/10 hover:bg-white/10' 
+                : 'bg-white border-slate-200 shadow-xl hover:shadow-2xl'
+            }`}
+          >
+            {/* "New" Badge for Home Tuition */}
+            {item.isNew && (
+              <div className="absolute top-6 right-[-35px] bg-indigo-600 text-white text-[10px] font-black py-1 w-32 text-center rotate-45 shadow-lg">
+                NEW SERVICE
+              </div>
+            )}
+
+            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-colors ${
+              isDarkMode ? 'bg-indigo-500/10' : 'bg-indigo-50 group-hover:bg-indigo-600'
+            }`}>
+              <item.i className={`transition-colors ${
+                isDarkMode ? 'text-indigo-500' : 'text-indigo-600 group-hover:text-white'
+              }`} size={32} />
             </div>
-            <h3 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{item.t}</h3>
-            <p className={`leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>{item.d}</p>
+            
+            <h3 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              {item.t}
+            </h3>
+            <p className={`leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+              {item.d}
+            </p>
           </div>
         ))}
       </div>
