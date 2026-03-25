@@ -290,7 +290,7 @@ const About = ({ isDarkMode }) => (
 
 const Gallery = ({ isDarkMode }) => {
   const photos = [
-    { url: "https://images.unsplash.com/photo-1523240715181-01489a943ee2?w=500", title: "Smart Class" },
+    { url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Smart Class" },
     { url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500", title: "Study Focus" },
     { url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500", title: "Group Session" },
     { url: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500", title: "Top Results" },
@@ -300,7 +300,7 @@ const Gallery = ({ isDarkMode }) => {
     { url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500", title: "Coding Class" },
     { url: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500", title: "Library" },
     { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500", title: "Doubt Clearing" },
-    { url: "https://images.unsplash.com/photo-1513258496099-48168024adb0?w=500", title: "Success Gala" },
+    { url: "https://plus.unsplash.com/premium_photo-1664303932375-21fe1d60b886?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Success Gala" },
     { url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500", title: "Workshops" },
   ];
 
