@@ -292,129 +292,204 @@ const About = ({ isDarkMode }) => (
 
 const Blog = ({ isDarkMode }) => {
   const [selectedPost, setSelectedPost] = useState(null);
+  const [readingProgress, setReadingProgress] = useState(0);
 
   const posts = [
     {
       id: 1,
-      title: "How to Score 95% in Class 10 Boards",
-      desc: "Success isn't just about hard work; it's about the 80/20 rule. Focus on high-weightage NCERT topics first.",
-      content: "To score 95%, you must master the NCERT back-to-back. 1. Solve the last 10 years' question papers. 2. Focus on diagrams in Science and maps in SST. 3. Practice Math daily for 2 hours. At TutionPro, we provide 'Chapter Cheat Sheets' that summarize everything in 2 pages.",
-      tag: "Strategy",
+      title: "Mastering the 80/20 Rule for Board Exams",
+      desc: "Why 20% of your syllabus results in 80% of your marks. Learn to identify high-weightage chapters.",
+      content: "The Pareto Principle applies heavily to CBSE/ICSE boards. For instance, in Class 10 Science, Physics and Biology often carry more consistent scoring patterns than Chemistry. 1. Audit previous papers from 2016-2025. 2. Mark 'Repeated Concepts' in your NCERT. 3. Master these before touching elective topics. At TutionPro, our 'Focus Modules' are built entirely on this data-driven strategy to ensure you hit that 95% mark without burnout.",
+      tag: "Board Prep",
       date: "March 2026",
-      icon: Trophy
+      icon: Trophy,
+      readTime: "5 min"
     },
     {
       id: 2,
-      title: "The Ultimate 14-Hour Study Timetable",
-      desc: "Scientific breakdown of study slots, including the Pomodoro technique to keep your brain fresh.",
-      content: "The best timetable follows a 3-3-3-3 structure. 3 hours for heavy subjects (Math/Physics) in the morning, 3 hours for theory in the afternoon, and 3 hours for revision at night. Use 50 minutes of study followed by a 10-minute break. This prevents brain fatigue.",
+      title: "The 3-3-3-3 Productivity Framework",
+      desc: "A scientific study timetable designed for the human brain's peak cognitive windows.",
+      content: "Your brain isn't a machine. The 3-3-3-3 method divides your day into four zones. Zone 1 (7 AM - 10 AM): Deep work for Math/Physics. Zone 2 (11 AM - 2 PM): Languages/Social Science. Zone 3 (4 PM - 7 PM): Problem-solving or Revision. Zone 4 (8 PM - 10 PM): Self-testing. Between every 50 minutes, take a 10-minute 'digital-free' break. This prevents decision fatigue and keeps your retention rate at an all-time high.",
       tag: "Productivity",
       date: "Feb 2026",
-      icon: Clock
+      icon: Clock,
+      readTime: "4 min"
     },
     {
       id: 3,
-      title: "Overcoming Math Anxiety",
-      desc: "Stop fearing numbers. Learn how our visualization techniques make complex Algebra feel like a game.",
-      content: "Math anxiety is psychological. Start with easy problems to build 'dopamine wins.' Use visual tools like graphs and 3D shapes to understand why a formula works instead of just memorizing it. Our mentors in Indirapuram specialize in 'Fear-Free Mathematics.'",
-      tag: "Guidance",
+      title: "Eliminating Math Anxiety Forever",
+      desc: "Stop the 'Blackout' during exams. Visualization techniques to make Algebra intuitive.",
+      content: "Math anxiety often stems from abstract formulas. We solve this by making Math tactile. Instead of memorizing (a+b)², we visualize it as areas of squares and rectangles. When you 'see' the logic, the anxiety vanishes. Our Abhay Khand center uses interactive 3D simulations to explain Calculus and Trigonometry, turning a scary subject into a visual game. Remember: Math is a language, not a monster.",
+      tag: "Mental Health",
       date: "Jan 2026",
-      icon: Target
+      icon: Target,
+      readTime: "6 min"
     }
   ];
 
+  // Logic to simulate reading progress bar in modal
+  const handleScroll = (e) => {
+    const element = e.target;
+    const totalHeight = element.scrollHeight - element.clientHeight;
+    const scrollPosition = element.scrollTop;
+    setReadingProgress((scrollPosition / totalHeight) * 100);
+  };
+
   return (
-    <section id="blog" className="py-32 scroll-mt-24">
+    <section id="blog" className="py-32 scroll-mt-24 relative overflow-hidden">
+      {/* Background Decorative Element */}
+      <div className={`absolute top-0 right-0 w-96 h-96 rounded-full blur-[120px] opacity-20 -z-10 ${isDarkMode ? 'bg-indigo-600' : 'bg-indigo-300'}`} />
+
       <FadeInWhenVisible>
-        <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
-          <div className="text-center md:text-left">
-            <h2 className={`text-5xl md:text-6xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-              Academic <span className="text-indigo-600">Insights.</span>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="max-w-2xl">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2 mb-4"
+            >
+              <Zap size={18} className="text-indigo-600 fill-indigo-600" />
+              <span className="text-indigo-600 font-black uppercase tracking-[0.3em] text-xs">Expert Insights</span>
+            </motion.div>
+            <h2 className={`text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              The Student <br /> <span className="text-indigo-600">Growth Hub.</span>
             </h2>
-            <p className="opacity-60 text-lg mt-2 font-medium">Expert tips for students in Abhay Khand.</p>
           </div>
+          <p className={`text-xl max-w-xs font-medium opacity-60 ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+            Proven strategies from Indirapuram's top educators.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* --- STAGGERED BLOG GRID --- */}
+        <motion.div 
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: { staggerChildren: 0.2 }
+            }
+          }}
+          className="grid md:grid-cols-3 gap-8"
+        >
           {posts.map((post) => (
             <motion.div 
               key={post.id}
-              whileHover={{ y: -10 }}
-              className={`p-10 rounded-[48px] border flex flex-col h-full transition-all cursor-pointer ${
-                isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200 shadow-xl'
-              }`}
+              variants={{
+                hidden: { y: 30, opacity: 0 },
+                show: { y: 0, opacity: 1 }
+              }}
+              whileHover={{ y: -15, transition: { duration: 0.3 } }}
               onClick={() => setSelectedPost(post)}
+              className={`group p-10 rounded-[50px] border flex flex-col h-full transition-all cursor-pointer relative overflow-hidden ${
+                isDarkMode 
+                  ? 'bg-slate-900/50 border-white/5 hover:border-indigo-500/50 hover:bg-slate-900 shadow-2xl shadow-black/50' 
+                  : 'bg-white border-slate-100 shadow-xl hover:shadow-indigo-500/10'
+              }`}
             >
-              <div className="flex justify-between items-start mb-8">
-                <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                  <post.icon size={28} />
+              {/* Card Header */}
+              <div className="flex justify-between items-start mb-10">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-indigo-600 blur-xl opacity-0 group-hover:opacity-40 transition-opacity" />
+                  <div className="relative w-16 h-16 bg-indigo-600 rounded-3xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:rotate-12">
+                    <post.icon size={30} />
+                  </div>
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">{post.date}</span>
+                <div className="text-right">
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-30">{post.date}</div>
+                  <div className="text-[10px] font-bold text-indigo-500">{post.readTime} Read</div>
+                </div>
               </div>
-              <h3 className={`text-2xl font-black mb-4 leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{post.title}</h3>
-              <p className="opacity-60 text-sm leading-relaxed mb-8 flex-grow">{post.desc}</p>
-              <button className="flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-widest group">
-                Read Full Guide <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-              </button>
+
+              <span className="px-4 py-1 bg-indigo-600/10 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-widest w-fit mb-6">
+                {post.tag}
+              </span>
+
+              <h3 className={`text-2xl font-black mb-4 leading-tight group-hover:text-indigo-600 transition-colors ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                {post.title}
+              </h3>
+
+              <p className="opacity-50 text-base leading-relaxed mb-10 flex-grow">
+                {post.desc}
+              </p>
+
+              <div className="flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-[0.2em] group/btn">
+                <span>Unlock Guide</span>
+                <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-3" />
+              </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </FadeInWhenVisible>
 
-      {/* --- BLOG READER MODAL --- */}
+      {/* --- PREMIUM BLOG READER MODAL --- */}
       <AnimatePresence>
         {selectedPost && (
-          <div className="fixed inset-0 z-[300] flex items-center justify-center p-6 md:p-20">
-            {/* Backdrop */}
+          <div className="fixed inset-0 z-[400] flex items-center justify-center p-4 md:p-10">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedPost(null)}
-              className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl"
             />
             
-            {/* Modal Content */}
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className={`relative w-full max-w-2xl max-h-[80vh] overflow-y-auto p-10 md:p-16 rounded-[60px] border shadow-2xl ${
+              initial={{ y: 100, opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 100, opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className={`relative w-full max-w-3xl max-h-[85vh] rounded-[60px] border flex flex-col shadow-2xl overflow-hidden ${
                 isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'
               }`}
             >
+              {/* Progress Bar */}
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-white/5 z-50">
+                <motion.div 
+                  className="h-full bg-indigo-600"
+                  style={{ width: `${readingProgress}%` }}
+                />
+              </div>
+
+              {/* Close Button */}
               <button 
                 onClick={() => setSelectedPost(null)}
-                className="absolute top-8 right-8 p-3 bg-indigo-600/10 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition-all"
+                className="absolute top-8 right-8 z-50 p-4 bg-white/5 text-white rounded-full hover:bg-red-500 transition-colors backdrop-blur-md"
               >
                 <X size={24} />
               </button>
 
-              <span className="px-4 py-1.5 bg-indigo-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest">
-                {selectedPost.tag}
-              </span>
-              
-              <h2 className={`text-4xl md:text-5xl font-black tracking-tighter mt-6 mb-8 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                {selectedPost.title}
-              </h2>
-              
-              <div className={`text-lg leading-relaxed space-y-4 ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
-                {selectedPost.content.split('. ').map((sentence, i) => (
-                  <p key={i}>{sentence}.</p>
-                ))}
-              </div>
-
-              <div className="mt-12 pt-10 border-t border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-black italic">T</div>
-                  <span className="font-bold text-sm">TutionPro Editorial</span>
+              <div 
+                onScroll={handleScroll}
+                className="overflow-y-auto p-12 md:p-20 space-y-8 scrollbar-hide"
+              >
+                <div className="space-y-4">
+                  <span className="text-indigo-600 font-black uppercase tracking-[0.3em] text-xs">Full Guide • {selectedPost.tag}</span>
+                  <h2 className={`text-4xl md:text-6xl font-black tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                    {selectedPost.title}
+                  </h2>
                 </div>
-                <button 
-                  onClick={() => setSelectedPost(null)}
-                  className="text-indigo-600 font-black text-xs uppercase tracking-widest hover:underline"
-                >
-                  Close Reader
-                </button>
+
+                <div className={`text-xl leading-relaxed space-y-6 ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+                  {selectedPost.content.split('. ').map((sentence, i) => (
+                    <p key={i} className="first-letter:text-4xl first-letter:font-black first-letter:text-indigo-600 first-letter:mr-1">
+                      {sentence}.
+                    </p>
+                  ))}
+                </div>
+
+                <div className={`p-10 rounded-[40px] border-2 border-dashed flex flex-col md:flex-row items-center gap-8 ${isDarkMode ? 'border-white/10 bg-white/5' : 'border-indigo-100 bg-indigo-50/30'}`}>
+                   <div className="h-20 w-20 bg-indigo-600 rounded-3xl flex items-center justify-center text-white shrink-0 shadow-2xl shadow-indigo-600/30">
+                     <BookOpen size={32} />
+                   </div>
+                   <div className="space-y-2 text-center md:text-left">
+                     <h4 className="text-xl font-bold italic">Want the full Chapter Cheat Sheets?</h4>
+                     <p className="text-sm opacity-60">Join our upcoming Batch in Indirapuram and get exclusive physical copies.</p>
+                     <button className="text-indigo-600 font-black text-xs uppercase tracking-widest hover:underline mt-2">Reserve your seat</button>
+                   </div>
+                </div>
               </div>
             </motion.div>
           </div>
