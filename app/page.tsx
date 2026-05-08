@@ -737,6 +737,123 @@ const Services = ({ isDarkMode }) => (
   </section>
 );
 
+const TeacherSideBanner = ({ isDarkMode }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  if (!isVisible) return null;
+
+  return (
+    <motion.div
+      initial={{ x: 120, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ delay: 3, type: "spring", stiffness: 100 }}
+      className="fixed right-0 top-[60%] -translate-y-1/2 z-[150] hidden xl:flex group"
+    >
+      {/* Main Container */}
+      <div className={`relative flex items-center transition-all duration-500 ease-out rounded-l-[40px] shadow-[0_20px_50px_rgba(79,70,229,0.3)] border-y border-l overflow-hidden
+        ${isDarkMode 
+          ? 'bg-slate-900/95 border-indigo-500/30' 
+          : 'bg-white/95 border-indigo-200'
+        } 
+        w-20 hover:w-[320px] h-72`}
+      >
+        
+        {/* CLOSE BUTTON - Only visible on hover */}
+        <button 
+          onClick={() => setIsVisible(false)}
+          className="absolute top-4 right-4 p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:rotate-90 duration-300 text-slate-400 hover:text-red-500"
+        >
+          <X size={18} />
+        </button>
+
+        {/* SIDE STRIP (The "Hook") */}
+        <div className="w-20 h-full bg-gradient-to-b from-indigo-600 to-violet-700 flex flex-col items-center justify-between py-8 shrink-0">
+          <div className="relative">
+            <GraduationCap className="text-white" size={28} />
+            {/* Animated Notification Dot */}
+            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+            </span>
+          </div>
+          
+          <span className="[writing-mode:vertical-lr] rotate-180 font-black uppercase tracking-[0.4em] text-[11px] text-white/90">
+            Teaching <span className="text-yellow-400">Start</span>
+          </span>
+
+          <div className="flex flex-col gap-1">
+             <div className="w-1 h-1 rounded-full bg-white/20" />
+             <div className="w-1 h-8 rounded-full bg-white/40" />
+             <div className="w-1 h-1 rounded-full bg-white/20" />
+          </div>
+        </div>
+
+        {/* EXPANDABLE CONTENT */}
+        <div className="flex flex-col justify-center px-8 w-[240px] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 translate-x-10 group-hover:translate-x-0">
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <h4 className={`text-2xl font-black tracking-tighter leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                Join the <br/> <span className="text-indigo-600 italic">Elite 200.</span>
+              </h4>
+              <p className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Indirapuram Tutors</p>
+            </div>
+
+            <div className="space-y-2">
+               <div className="flex items-center gap-2 text-xs font-bold opacity-70">
+                 <Check size={14} className="text-green-500" /> Earn ₹25,000+ Monthly
+               </div>
+               <div className="flex items-center gap-2 text-xs font-bold opacity-70">
+                 <Check size={14} className="text-green-500" /> 100+ Live Enquiries
+               </div>
+            </div>
+
+            <motion.a 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="https://chat.whatsapp.com/Hju1u5qcChiKKCC1c8iVdL"
+              target="_blank"
+              className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-4 px-2 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-green-500/20"
+            >
+              <MessageCircle size={18} fill="currentColor" />
+              Claim Your Slot
+            </motion.a>
+            
+            <p className="text-[9px] text-center opacity-40 font-bold uppercase tracking-tighter italic">
+              *Limited registrations this week
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const TeacherMobileStrip = ({ isDarkMode }) => {
+  return (
+    <div className="xl:hidden fixed bottom-24 left-6 right-6 z-[110]">
+      <motion.a
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        href="https://chat.whatsapp.com/Hju1u5qcChiKKCC1c8iVdL"
+        className="flex items-center justify-between bg-indigo-600 text-white p-4 rounded-2xl shadow-2xl border border-indigo-400/30"
+      >
+        <div className="flex items-center gap-3">
+          <div className="bg-white/20 p-2 rounded-lg">
+            <GraduationCap size={20} />
+          </div>
+          <div>
+            <div className="text-[11px] font-black uppercase tracking-wider">Hiring Home Tutors/Teachers</div>
+            <div className="text-[10px] opacity-80">Join our Teacher Whatsapp Group</div>
+          </div>
+        </div>
+        <div className="bg-[#25D366] p-2 rounded-full">
+          <ArrowRight size={16} />
+        </div>
+      </motion.a>
+    </div>
+  );
+};
+
 const TeacherSection = ({ isDarkMode }) => {
   const benefits = [
     { 
@@ -1223,6 +1340,9 @@ export default function App() {
       <AnimatePresence>
         {isLoading && <Preloader isDarkMode={isDarkMode} key="loader" />}
       </AnimatePresence>
+
+      <TeacherSideBanner isDarkMode={isDarkMode} />
+    <TeacherMobileStrip isDarkMode={isDarkMode} />
 
       {/* 1. TOP ADVERTISEMENT BANNER */}
       <div className="fixed top-0 left-0 w-full z-[120] bg-indigo-600 text-white py-2 border-b border-indigo-400/30 overflow-hidden shadow-xl">
