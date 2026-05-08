@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { id: "home", name: "Home", icon: Home },
   { id: "about", name: "About Us", icon: Info },
   { id: "blog", name: "Tips & News", icon: BookOpen },
+  { id: "teachers", name: "Join as Teacher", icon: GraduationCap },
   { id: "gallery", name: "Gallery", icon: Globe },
   { id: "why-us", name: "Why Choose Us", icon: Target },
   { id: "services", name: "Services", icon: Briefcase },
@@ -735,6 +736,163 @@ const Services = ({ isDarkMode }) => (
     </FadeInWhenVisible>
   </section>
 );
+
+const TeacherSection = ({ isDarkMode }) => {
+  const benefits = [
+    { 
+      title: "High Earnings", 
+      desc: "Earn up to ₹25,000/month by teaching just 3 hours a day.", 
+      icon: CreditCard,
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/10"
+    },
+    { 
+      title: "Flexible Timing", 
+      desc: "Choose your own slots and teach in your preferred locality.", 
+      icon: Clock,
+      color: "text-amber-500",
+      bg: "bg-amber-500/10"
+    },
+    { 
+      title: "Expert Support", 
+      desc: "Get ready-made notes and 3D animations to teach better.", 
+      icon: Cpu,
+      color: "text-indigo-500",
+      bg: "bg-indigo-500/10"
+    }
+  ];
+
+  return (
+    <section id="teachers" className="py-32 scroll-mt-24 relative overflow-hidden">
+      {/* Background Decorative Blobs */}
+      <div className={`absolute top-1/4 -right-20 w-96 h-96 rounded-full blur-[120px] opacity-20 -z-10 ${isDarkMode ? 'bg-indigo-500' : 'bg-indigo-300'}`} />
+      <div className={`absolute bottom-0 -left-20 w-72 h-72 rounded-full blur-[100px] opacity-10 -z-10 ${isDarkMode ? 'bg-purple-500' : 'bg-purple-300'}`} />
+
+      <div className="relative z-10">
+        <FadeInWhenVisible>
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            
+            {/* TEXT CONTENT & BENEFITS */}
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-500 text-[10px] font-black uppercase tracking-[0.2em]"
+                >
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  We are Hiring
+                </motion.div>
+                <h2 className={`text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  Share Knowledge. <br /> <span className="text-indigo-600">Earn Income.</span>
+                </h2>
+              </div>
+              
+              <p className={`text-xl leading-relaxed opacity-70 max-w-lg ${isDarkMode ? 'text-gray-300' : 'text-slate-600'}`}>
+                Join Indirapuram's premium home tuition network. We connect expert educators with students looking for excellence.
+              </p>
+
+              <div className="grid gap-4">
+                {benefits.map((b, i) => (
+                  <motion.div 
+                    key={i} 
+                    whileHover={{ x: 10 }}
+                    className={`p-6 rounded-[32px] border flex items-center gap-6 transition-all ${
+                      isDarkMode 
+                        ? 'bg-slate-900/50 border-white/5 hover:bg-slate-900 hover:border-indigo-500/30' 
+                        : 'bg-white border-slate-100 shadow-sm hover:shadow-md'
+                    }`}
+                  >
+                    <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 ${b.bg} ${b.color}`}>
+                      <b.icon size={28} />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-black">{b.title}</h4>
+                      <p className="text-sm opacity-60 leading-tight">{b.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-4 pt-4">
+                <motion.a 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://chat.whatsapp.com/Hju1u5qcChiKKCC1c8iVdL" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black shadow-2xl shadow-indigo-600/30 flex items-center gap-3 transition-all no-underline"
+                >
+                  Join Teacher Group <ArrowRight size={20} />
+                </motion.a>
+                <div className="flex -space-x-3 items-center ml-4">
+                  {[
+                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop"
+                  ].map((url, i) => (
+                    <img key={i} src={url} className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover" alt="Tutor" />
+                  ))}
+                  <div className={`w-10 h-10 rounded-full border-2 border-slate-950 flex items-center justify-center text-[10px] font-bold ${isDarkMode ? 'bg-slate-800' : 'bg-slate-200'}`}>
+                    +150
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* IMAGE SECTION */}
+            <div className="relative group">
+              <div className={`absolute inset-0 rounded-[60px] blur-3xl opacity-20 -z-10 transition-colors ${isDarkMode ? 'bg-indigo-600' : 'bg-indigo-400'}`} />
+              
+              <div className="relative aspect-[4/5] rounded-[60px] overflow-hidden border-8 border-white/5 shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" 
+                  alt="Modern Teacher" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                
+                {/* Visual Overlay for contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/60 via-transparent to-transparent" />
+              </div>
+
+              {/* Floating Success Card */}
+              <motion.div 
+                animate={{ y: [0, -15, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className={`absolute -bottom-8 -right-8 md:right-0 p-8 rounded-[40px] shadow-2xl border flex flex-col gap-2 ${
+                  isDarkMode ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-100'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-indigo-600/20">
+                    <Trophy size={24} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black tracking-tighter text-indigo-600">Top Rated</div>
+                    <div className="text-[10px] font-black uppercase tracking-widest opacity-40">Teacher Community</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Verified Badge */}
+              <div className="absolute top-10 left-10 p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center gap-2">
+                <div className="h-4 w-4 bg-blue-500 rounded-full flex items-center justify-center">
+                  <Check size={10} className="text-white" strokeWidth={4} />
+                </div>
+                <span className="text-white text-xs font-black uppercase tracking-widest">Verified Faculty</span>
+              </div>
+            </div>
+
+          </div>
+        </FadeInWhenVisible>
+      </div>
+    </section>
+  );
+};
+
 const Testimonials = ({ isDarkMode }) => {
   const reviews = [
     { 
@@ -1014,7 +1172,6 @@ export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-  // Handle Initial Loading Animation (Session-based)
   useEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("hasSeenIntro");
     if (hasSeenIntro) {
@@ -1023,7 +1180,7 @@ export default function App() {
       const timer = setTimeout(() => {
         setIsLoading(false);
         sessionStorage.setItem("hasSeenIntro", "true");
-      }, 2500); // Intro duration
+      }, 2500);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -1043,9 +1200,15 @@ export default function App() {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) setActivePage(entry.target.id);
+        // Only update if the section is mostly visible
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+          setActivePage(entry.target.id);
+        }
       });
-    }, { threshold: 0.3, rootMargin: "-140px 0px 0px 0px" });
+    }, { 
+      threshold: [0.3], 
+      rootMargin: "-140px 0px 0px 0px" 
+    });
 
     NAV_LINKS.forEach(link => {
       const el = document.getElementById(link.id);
@@ -1057,7 +1220,6 @@ export default function App() {
   return (
     <div className={`transition-colors duration-500 selection:bg-indigo-600 selection:text-white ${isDarkMode ? "bg-slate-950 text-white" : "bg-white text-slate-900"}`}>
       
-      {/* 0. WEBSITE PRELOADER */}
       <AnimatePresence>
         {isLoading && <Preloader isDarkMode={isDarkMode} key="loader" />}
       </AnimatePresence>
@@ -1092,13 +1254,19 @@ export default function App() {
             <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white italic shadow-lg shadow-indigo-600/20">T</div>
             <span>Tution<span className="text-indigo-600">Pro</span></span>
           </div>
-          <div className="hidden md:flex items-center gap-2 bg-indigo-500/5 p-1 rounded-2xl border border-indigo-500/10">
+          
+          <div className="hidden md:flex items-center gap-1 bg-indigo-500/5 p-1 rounded-2xl border border-indigo-500/10">
             {NAV_LINKS.map(link => (
-              <button key={link.id} onClick={() => navigateTo(link.id)} className={`px-5 py-2 font-bold text-sm rounded-xl transition-all ${activePage === link.id ? "text-white bg-indigo-600 shadow-md" : "opacity-50 hover:opacity-100"}`}>
+              <button 
+                key={link.id} 
+                onClick={() => navigateTo(link.id)} 
+                className={`px-4 py-2 font-bold text-[13px] rounded-xl transition-all ${activePage === link.id ? "text-white bg-indigo-600 shadow-md" : "opacity-50 hover:opacity-100"}`}
+              >
                 {link.name}
               </button>
             ))}
           </div>
+
           <div className="flex items-center gap-4">
             <button onClick={() => setIsDarkMode(!isDarkMode)} className={`p-3 rounded-2xl transition-all ${isDarkMode ? 'bg-white/5 text-yellow-400' : 'bg-slate-100 text-indigo-600'}`}>
               {isDarkMode ? <Sun size={22}/> : <Moon size={22}/>}
@@ -1108,45 +1276,12 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Floating Contact Buttons */}
-      {/* Floating Contact Buttons */}
-      <div className="fixed bottom-6 right-6 z-[120] flex flex-col gap-4">
-        {/* WhatsApp Button */}
-        <motion.a 
-          whileHover={{ scale: 1.1, rotate: 5 }} 
-          whileTap={{ scale: 0.9 }} 
-          href="https://wa.me/919559494070?text=Hi%20TutionPro,%20I'm%20interested%20in%20your%20coaching%20classes!" 
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl cursor-pointer"
-        >
-          {/* Official WhatsApp Logo SVG */}
-          <svg 
-            viewBox="0 0 24 24" 
-            width="32" 
-            height="32" 
-            fill="currentColor" 
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.938 3.659 1.434 5.633 1.435h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-          </svg>
-        </motion.a>
-
-        {/* Call Button */}
-        <motion.a 
-          whileHover={{ scale: 1.1 }} 
-          whileTap={{ scale: 0.9 }} 
-          href="tel:+919559494070" 
-          className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-2xl cursor-pointer"
-        >
-          <Phone size={28} fill="currentColor" />
-        </motion.a>
-      </div>
-
+      {/* Main Sections */}
       <main className="max-w-7xl mx-auto px-6">
         <Hero navigateTo={navigateTo} isDarkMode={isDarkMode} />
         <About isDarkMode={isDarkMode} />
         <Blog isDarkMode={isDarkMode} />
+        <TeacherSection isDarkMode={isDarkMode} />
         <Gallery isDarkMode={isDarkMode} />
         <WhyChooseUs isDarkMode={isDarkMode} />
         <Services isDarkMode={isDarkMode} />
@@ -1155,13 +1290,37 @@ export default function App() {
         <Contact isDarkMode={isDarkMode} />
       </main>
 
-      {/* Mobile Menu */}
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-6 right-6 z-[120] flex flex-col gap-4">
+        <motion.a 
+          whileHover={{ scale: 1.1, rotate: 5 }} 
+          whileTap={{ scale: 0.9 }} 
+          href="https://wa.me/919559494070?text=Hi%20TutionPro,%20I'm%20interested!" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl"
+        >
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.938 3.659 1.434 5.633 1.435h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </motion.a>
+        <motion.a 
+          whileHover={{ scale: 1.1 }} 
+          whileTap={{ scale: 0.9 }} 
+          href="tel:+919559494070" 
+          className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-2xl"
+        >
+          <Phone size={28} fill="currentColor" />
+        </motion.a>
+      </div>
+
+      {/* Mobile Menu Overlays */}
       <AnimatePresence>
         {isMobileMenu && (
           <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", damping: 25 }} className={`fixed inset-0 z-[200] p-10 flex flex-col items-center justify-center gap-8 ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}>
              <button onClick={() => setIsMobileMenu(false)} className="absolute top-10 right-10 p-4 bg-indigo-600/10 text-indigo-600 rounded-full"><X size={32}/></button>
              {NAV_LINKS.map(link => (
-               <button key={link.id} onClick={() => navigateTo(link.id)} className="text-5xl font-black uppercase tracking-tighter active:text-indigo-600">
+               <button key={link.id} onClick={() => navigateTo(link.id)} className="text-4xl font-black uppercase tracking-tighter active:text-indigo-600">
                  {link.name}
                </button>
              ))}
@@ -1170,17 +1329,17 @@ export default function App() {
       </AnimatePresence>
 
       <footer className={`py-20 border-t ${isDarkMode ? 'border-white/5 bg-slate-950' : 'border-slate-200 bg-slate-50'}`}>
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 text-left">
           <div className="col-span-2 space-y-6">
             <div className="flex items-center gap-2 font-black text-3xl tracking-tighter">
               <div className="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white italic">T</div>
               <span>Tution<span className="text-indigo-600">Pro</span></span>
             </div>
-            <p className="max-w-xs opacity-50 text-lg">Empowering the next generation of engineers with expert guidance.</p>
+            <p className="max-w-xs opacity-50 text-lg">Empowering the next generation with expert guidance and modern tools.</p>
           </div>
           <div className="space-y-4">
             <h4 className="font-bold uppercase tracking-widest text-sm text-indigo-600">Quick Links</h4>
-            {NAV_LINKS.map(l => <button key={l.id} onClick={() => navigateTo(l.id)} className="block opacity-60 hover:opacity-100 transition-opacity text-left">{l.name}</button>)}
+            {NAV_LINKS.map(l => <button key={l.id} onClick={() => navigateTo(l.id)} className="block opacity-60 hover:opacity-100 transition-opacity">{l.name}</button>)}
           </div>
           <div className="space-y-6">
             <h4 className="font-bold uppercase tracking-widest text-sm text-indigo-600">Connect</h4>
@@ -1192,7 +1351,7 @@ export default function App() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 mt-20 pt-10 border-t border-white/5 text-center opacity-30 text-sm font-medium">
-          © 2026 TutionPro Education Group.
+          © 2026 TutionPro Education Group. Noida & Indirapuram.
         </div>
       </footer>
     </div>
